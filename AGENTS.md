@@ -15,5 +15,5 @@ Static site (`index.html`, `app.js`, `style.css`, generated `data/produce.js`). 
 
 ## Verify before finishing
 1. `node --check app.js`.
-2. Serve (`python3 -m http.server`) and run `npx @axe-core/cli http://localhost:8000` (check both themes and both languages).
+2. Do not run axe; the owner doesn't want it. Check by hand instead (both themes, both languages).
 3. Tab through the page; focus must be visible and order logical.
