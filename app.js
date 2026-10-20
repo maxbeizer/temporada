@@ -11,7 +11,7 @@
       srcA: "Calendario mensual InfoAgro / inspiracioneco (basado en documentos públicos del INTA), vía AgroRuralNoticias, 2020-07-18",
       srcB: "Argentina.gob.ar, Más Frutas y Verduras: frutas y verduras de estación; y Cuatro Estaciones (otoño)",
       approx: "estacional (aprox.)",
-      themeLbl: "Tema", typeLbl: "Tipo", skip: "Ir a la tabla", inSeason: "de temporada", outSeason: "fuera de temporada", curMonth: "mes actual", cap: "Calendario de temporada por producto y mes", region: "Calendario (desplazable)", system: "Sistema", light: "Claro", dark: "Oscuro"
+      themeLbl: "Tema", typeLbl: "Tipo", filters: "Filtros", skip: "Ir a la tabla", inSeason: "de temporada", outSeason: "fuera de temporada", curMonth: "mes actual", cap: "Calendario de temporada por producto y mes", region: "Calendario (desplazable)", system: "Sistema", light: "Claro", dark: "Oscuro"
     },
     en: {
       months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
@@ -24,7 +24,7 @@
       srcA: "InfoAgro / inspiracioneco monthly calendar (based on public INTA documents), via AgroRuralNoticias, 2020-07-18",
       srcB: "Argentina.gob.ar, Más Frutas y Verduras: seasonal produce; and Cuatro Estaciones (autumn)",
       approx: "seasonal (approx.)",
-      themeLbl: "Theme", typeLbl: "Type", skip: "Skip to table", inSeason: "in season", outSeason: "not in season", curMonth: "current month", cap: "Seasonality by produce item and month", region: "Calendar (scrollable)", system: "System", light: "Light", dark: "Dark"
+      themeLbl: "Theme", typeLbl: "Type", filters: "Filters", skip: "Skip to table", inSeason: "in season", outSeason: "not in season", curMonth: "current month", cap: "Seasonality by produce item and month", region: "Calendar (scrollable)", system: "System", light: "Light", dark: "Dark"
     }
   };
   const $ = id => document.getElementById(id);
@@ -45,6 +45,7 @@
     });
     $("nowlbl").textContent = t.now;
     $("lang").textContent = t.lang; $("lang").lang = state.lang === "es" ? "en" : "es";
+    document.querySelector(".controls").setAttribute("aria-label", t.filters);
     $("skiplbl").textContent = t.skip;
     $("type").setAttribute("aria-label", t.typeLbl);
     $("grid").parentElement.setAttribute("aria-label", t.region);
