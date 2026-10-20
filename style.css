@@ -4,12 +4,11 @@
 body{margin:0 auto;max-width:960px;padding:1rem;background:var(--bg);color:var(--fg);font:16px/1.4 system-ui,sans-serif}
 h1{margin:.2rem 0 0}h2{font-size:1rem}
 #tagline{margin:.2rem 0 1rem;color:var(--mut)}
-.controls{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
-input[type=search]{flex:1 1 12rem;padding:.5rem;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg);font:inherit}
+input[type=search]{padding:.5rem;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg);font:inherit}
 button{font:inherit;padding:.4rem .7rem;border:1px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer}
 .seg{display:flex}.seg button:first-child{border-radius:6px 0 0 6px}.seg button:last-child{border-radius:0 6px 6px 0}
 button[aria-pressed=true]{background:var(--on);color:var(--on-fg);border-color:var(--on)}
-#lang,#rot{border-radius:6px}
+#rot{border-radius:6px}
 .chk{display:flex;gap:.3rem;align-items:center}
 #count{color:var(--mut);margin:.5rem 0}
 .wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--card)}
@@ -28,5 +27,19 @@ footer a{color:inherit}
 .skip{position:absolute;left:.5rem;top:-3rem;padding:.5rem .8rem;background:var(--card);color:var(--fg);border:2px solid var(--on);border-radius:6px;z-index:10}
 .skip:focus{top:.5rem}
 :focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.bar h1{font-size:1.75rem}
+#settingsbtn{border-radius:6px;min-height:44px}
+.controls{display:grid;gap:.6rem}
+.controls .seg{width:100%}.controls .seg button{flex:1;min-height:44px}
+input[type=search]{min-height:44px;width:100%}
+.chk{min-height:44px}.chk input{width:1.25rem;height:1.25rem}
+@media (min-width:640px){.controls{display:flex;flex-wrap:wrap;align-items:center}.controls .seg{width:auto}.controls .seg button{flex:none;min-height:0}input[type=search]{width:auto;min-height:0;flex:1 1 14rem}.chk{min-height:0}.bar h1{font-size:2rem}}
+dialog{border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--fg);padding:1rem;width:min(92vw,26rem)}
+dialog::backdrop{background:rgb(0 0 0/.5)}
+@media (max-width:639px){dialog{margin:auto 0 0;width:100%;max-width:none;border-radius:12px 12px 0 0}}
+.field{margin:1rem 0}.flbl{display:block;font-weight:600;margin-bottom:.4rem}
+dialog .seg button{flex:1;min-height:44px}dialog #rot{min-height:44px;width:100%}
+.primary{width:100%;min-height:44px;border-radius:6px;background:var(--on);color:var(--on-fg);border-color:var(--on)}
 @media (forced-colors:active){td.on .dot{background:Highlight;forced-color-adjust:none}button[aria-pressed=true]{outline:2px solid Highlight}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}

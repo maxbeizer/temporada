@@ -11,7 +11,7 @@
       srcA: "Calendario mensual InfoAgro / inspiracioneco (basado en documentos públicos del INTA), vía AgroRuralNoticias, 2020-07-18",
       srcB: "Argentina.gob.ar, Más Frutas y Verduras: frutas y verduras de estación; y Cuatro Estaciones (otoño)",
       approx: "estacional (aprox.)",
-      themeLbl: "Tema", typeLbl: "Tipo", filters: "Filtros", skip: "Ir a la tabla", cap: "Calendario de temporada por producto y mes", region: "Calendario (desplazable)", system: "Sistema", light: "Claro", dark: "Oscuro"
+      themeLbl: "Tema", typeLbl: "Tipo", filters: "Filtros", skip: "Ir a la tabla", cap: "Calendario de temporada por producto y mes", region: "Calendario (desplazable)", system: "Sistema", light: "Claro", dark: "Oscuro", settings: "Ajustes", langLbl: "Idioma", monthLbl: "Orden de meses", close: "Listo"
     },
     en: {
       months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
@@ -24,7 +24,7 @@
       srcA: "InfoAgro / inspiracioneco monthly calendar (based on public INTA documents), via AgroRuralNoticias, 2020-07-18",
       srcB: "Argentina.gob.ar, Más Frutas y Verduras: seasonal produce; and Cuatro Estaciones (autumn)",
       approx: "seasonal (approx.)",
-      themeLbl: "Theme", typeLbl: "Type", filters: "Filters", skip: "Skip to table", cap: "Seasonality by produce item and month", region: "Calendar (scrollable)", system: "System", light: "Light", dark: "Dark"
+      themeLbl: "Theme", typeLbl: "Type", filters: "Filters", skip: "Skip to table", cap: "Seasonality by produce item and month", region: "Calendar (scrollable)", system: "System", light: "Light", dark: "Dark", settings: "Settings", langLbl: "Language", monthLbl: "Month order", close: "Done"
     }
   };
   const $ = id => document.getElementById(id);
@@ -45,8 +45,12 @@
       b.textContent = t[b.dataset.v]; b.setAttribute("aria-pressed", b.dataset.v === state.type);
     });
     $("nowlbl").textContent = t.now;
-    $("lang").textContent = t.lang; $("lang").lang = state.lang === "es" ? "en" : "es";
-    document.querySelector(".controls").setAttribute("aria-label", t.filters);
+    $("settingslbl").textContent = t.settings; $("settingsttl").textContent = t.settings;
+    $("langlbl").textContent = t.langLbl; $("themelbl").textContent = t.themeLbl; $("monthlbl").textContent = t.monthLbl;
+    $("closebtn").textContent = t.close;
+    $("langgrp").setAttribute("aria-label", t.langLbl);
+    document.querySelectorAll("#langgrp button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === state.lang));
+    $("filters").setAttribute("aria-label", t.filters);
     $("skiplbl").textContent = t.skip;
     $("type").setAttribute("aria-label", t.typeLbl);
     $("grid").parentElement.setAttribute("aria-label", t.region);
@@ -88,7 +92,10 @@
   $("q").addEventListener("input", e => { state.q = e.target.value; render(); });
   $("now").addEventListener("change", e => { state.now = e.target.checked; render(); });
   $("rot").addEventListener("click", () => { state.rot = !state.rot; store.set("rot", state.rot ? "1" : "0"); render(); });
-  $("lang").addEventListener("click", () => { state.lang = state.lang === "es" ? "en" : "es"; store.set("lang", state.lang); render(); });
+  $("langgrp").addEventListener("click", e => { const l = e.target.dataset.l; if (l) { state.lang = l; store.set("lang", l); render(); } });
+  $("settingsbtn").addEventListener("click", () => $("settings").showModal());
+  $("closebtn").addEventListener("click", () => $("settings").close());
+  $("settings").addEventListener("click", e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
   $("theme").addEventListener("click", e => { if (THEMES.includes(e.target.dataset.t)) { state.theme = e.target.dataset.t; store.set("theme", state.theme); render(); } });
   $("type").addEventListener("click", e => { if (e.target.dataset.v) { state.type = e.target.dataset.v; render(); } });
   render();
