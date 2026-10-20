@@ -9,7 +9,7 @@ input[type=search]{flex:1 1 12rem;padding:.5rem;border:1px solid var(--line);bor
 button{font:inherit;padding:.4rem .7rem;border:1px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer}
 .seg{display:flex}.seg button:first-child{border-radius:6px 0 0 6px}.seg button:last-child{border-radius:0 6px 6px 0}
 button[aria-pressed=true]{background:var(--on);color:var(--on-fg);border-color:var(--on)}
-#lang{border-radius:6px}
+#lang,#rot{border-radius:6px}
 .chk{display:flex;gap:.3rem;align-items:center}
 #count{color:var(--mut);margin:.5rem 0}
 .wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--card)}
