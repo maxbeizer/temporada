@@ -11,7 +11,7 @@
       srcA: "Calendario mensual InfoAgro / inspiracioneco (basado en documentos públicos del INTA), vía AgroRuralNoticias, 2020-07-18",
       srcB: "Argentina.gob.ar, Más Frutas y Verduras: frutas y verduras de estación; y Cuatro Estaciones (otoño)",
       approx: "estacional (aprox.)",
-      theme: { system: "Tema: sistema", light: "Tema: claro", dark: "Tema: oscuro" }
+      themeLbl: "Tema", system: "Sistema", light: "Claro", dark: "Oscuro"
     },
     en: {
       months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
@@ -24,7 +24,7 @@
       srcA: "InfoAgro / inspiracioneco monthly calendar (based on public INTA documents), via AgroRuralNoticias, 2020-07-18",
       srcB: "Argentina.gob.ar, Más Frutas y Verduras: seasonal produce; and Cuatro Estaciones (autumn)",
       approx: "seasonal (approx.)",
-      theme: { system: "Theme: system", light: "Theme: light", dark: "Theme: dark" }
+      themeLbl: "Theme", system: "System", light: "Light", dark: "Dark"
     }
   };
   const $ = id => document.getElementById(id);
@@ -45,7 +45,10 @@
     });
     $("nowlbl").textContent = t.now;
     $("lang").textContent = t.lang;
-    $("theme").textContent = t.theme[state.theme];
+    $("theme").setAttribute("aria-label", t.themeLbl);
+    document.querySelectorAll("#theme button").forEach(b => {
+      b.textContent = t[b.dataset.t]; b.setAttribute("aria-pressed", b.dataset.t === state.theme);
+    });
     if (state.theme === "system") delete document.documentElement.dataset.theme;
     else document.documentElement.dataset.theme = state.theme;
     $("srch").textContent = t.srch; $("caveat").textContent = t.caveat;
@@ -78,7 +81,7 @@
   $("q").addEventListener("input", e => { state.q = e.target.value; render(); });
   $("now").addEventListener("change", e => { state.now = e.target.checked; render(); });
   $("lang").addEventListener("click", () => { state.lang = state.lang === "es" ? "en" : "es"; store.set("lang", state.lang); render(); });
-  $("theme").addEventListener("click", () => { state.theme = THEMES[(THEMES.indexOf(state.theme) + 1) % 3]; store.set("theme", state.theme); render(); });
+  $("theme").addEventListener("click", e => { if (THEMES.includes(e.target.dataset.t)) { state.theme = e.target.dataset.t; store.set("theme", state.theme); render(); } });
   $("type").addEventListener("click", e => { if (e.target.dataset.v) { state.type = e.target.dataset.v; render(); } });
   render();
 })();

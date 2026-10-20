@@ -22,7 +22,11 @@
   </div>
   <label class="chk"><input id="now" type="checkbox"> <span id="nowlbl"></span></label>
   <button id="lang" type="button"></button>
-  <button id="theme" type="button"></button>
+  <div class="seg" role="group" id="theme">
+    <button data-t="system" aria-pressed="false"></button>
+    <button data-t="light" aria-pressed="false"></button>
+    <button data-t="dark" aria-pressed="false"></button>
+  </div>
 </section>
 <p id="count" aria-live="polite"></p>
 <div class="wrap">
