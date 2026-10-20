@@ -52,7 +52,6 @@
     });
     if (state.theme === "system") delete document.documentElement.dataset.theme;
     else document.documentElement.dataset.theme = state.theme;
-    $("rot").textContent = state.rot ? t.rotOn : t.rotOff; $("rot").setAttribute("aria-pressed", state.rot);
     $("rot").textContent = t.rot; $("rot").setAttribute("aria-pressed", state.rot);
     $("srch").textContent = t.srch; $("caveat").textContent = t.caveat;
     $("sources").innerHTML = `<li>${t.srcA}</li><li>${t.srcB}</li>`;
