@@ -4,7 +4,7 @@
       months: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"],
       tagline: "Qué conviene comprar en la verdulería, mes a mes. Referencia: Buenos Aires y Pampa húmeda (hemisferio sur).",
       search: "Buscar…", all: "Todo", veg: "Verduras", fruit: "Frutas",
-      now: "De temporada ahora", lang: "English", rotOn: "Empezar: mes actual", rotOff: "Empezar: enero", crop: "Producto",
+      now: "De temporada ahora", lang: "English", rot: "Empezar por el mes actual", crop: "Producto",
       count: (n, t) => `${n} de ${t} productos`, none: "Sin resultados.",
       srch: "Fuentes y límites",
       caveat: "La temporada varía según la zona (Cuyo, NOA y Patagonia difieren) y la variedad. Es una guía general, no un dato de mercado. Los datos vienen de listas publicadas, no de mediciones propias; los meses de los productos marcados con ‘estacional’ son aproximados (por estación, no por mes).",
@@ -17,7 +17,7 @@
       months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
       tagline: "What to buy at the greengrocer, month by month. Reference: Buenos Aires and the Pampas (southern hemisphere).",
       search: "Search…", all: "All", veg: "Vegetables", fruit: "Fruit",
-      now: "In season now", lang: "Español", rotOn: "Start: current month", rotOff: "Start: January", crop: "Produce",
+      now: "In season now", lang: "Español", rot: "Start with current month", crop: "Produce",
       count: (n, t) => `${n} of ${t} items`, none: "No results.",
       srch: "Sources and limits",
       caveat: "Seasons vary by region (Cuyo, NOA and Patagonia differ) and by variety. This is a general guide, not market data. Data comes from published lists, not our own measurements; items marked ‘seasonal’ are approximate (by season, not by month).",
@@ -53,6 +53,7 @@
     if (state.theme === "system") delete document.documentElement.dataset.theme;
     else document.documentElement.dataset.theme = state.theme;
     $("rot").textContent = state.rot ? t.rotOn : t.rotOff; $("rot").setAttribute("aria-pressed", state.rot);
+    $("rot").textContent = t.rot; $("rot").setAttribute("aria-pressed", state.rot);
     $("srch").textContent = t.srch; $("caveat").textContent = t.caveat;
     $("sources").innerHTML = `<li>${t.srcA}</li><li>${t.srcB}</li>`;
 
