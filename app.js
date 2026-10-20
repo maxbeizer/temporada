@@ -11,7 +11,7 @@
       srcA: "Calendario mensual InfoAgro / inspiracioneco (basado en documentos públicos del INTA), vía AgroRuralNoticias, 2020-07-18",
       srcB: "Argentina.gob.ar, Más Frutas y Verduras: frutas y verduras de estación; y Cuatro Estaciones (otoño)",
       approx: "estacional (aprox.)",
-      themeLbl: "Tema", system: "Sistema", light: "Claro", dark: "Oscuro"
+      themeLbl: "Tema", typeLbl: "Tipo", filters: "Filtros", skip: "Ir a la tabla", cap: "Calendario de temporada por producto y mes", region: "Calendario (desplazable)", system: "Sistema", light: "Claro", dark: "Oscuro"
     },
     en: {
       months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
@@ -24,7 +24,7 @@
       srcA: "InfoAgro / inspiracioneco monthly calendar (based on public INTA documents), via AgroRuralNoticias, 2020-07-18",
       srcB: "Argentina.gob.ar, Más Frutas y Verduras: seasonal produce; and Cuatro Estaciones (autumn)",
       approx: "seasonal (approx.)",
-      themeLbl: "Theme", system: "System", light: "Light", dark: "Dark"
+      themeLbl: "Theme", typeLbl: "Type", filters: "Filters", skip: "Skip to table", cap: "Seasonality by produce item and month", region: "Calendar (scrollable)", system: "System", light: "Light", dark: "Dark"
     }
   };
   const $ = id => document.getElementById(id);
@@ -45,7 +45,11 @@
       b.textContent = t[b.dataset.v]; b.setAttribute("aria-pressed", b.dataset.v === state.type);
     });
     $("nowlbl").textContent = t.now;
-    $("lang").textContent = t.lang;
+    $("lang").textContent = t.lang; $("lang").lang = state.lang === "es" ? "en" : "es";
+    document.querySelector(".controls").setAttribute("aria-label", t.filters);
+    $("skiplbl").textContent = t.skip;
+    $("type").setAttribute("aria-label", t.typeLbl);
+    $("grid").parentElement.setAttribute("aria-label", t.region);
     $("theme").setAttribute("aria-label", t.themeLbl);
     document.querySelectorAll("#theme button").forEach(b => {
       b.textContent = t[b.dataset.t]; b.setAttribute("aria-pressed", b.dataset.t === state.theme);
@@ -64,20 +68,21 @@
     $("count").textContent = rows.length ? t.count(rows.length, window.PRODUCE.length) : t.none;
 
     const other = state.lang === "es" ? "en" : "es";
-    let h = `<thead><tr><th scope="col">${t.crop}</th>` +
-      order.map(i => `<th scope="col" class="${i === cur ? "cur" : ""}">${t.months[i]}${i === cur ? ` <span class="vh">${t.curMonth}</span>` : ""}</th>`).join("") + "</tr></thead><tbody>";
+    let h = `<caption class="vh">${t.cap}</caption><thead><tr><th scope="col">${t.crop}</th>` +
+      order.map(i => `<th scope="col" class="${i === cur ? "cur" : ""}">${t.months[i]}${i === cur ? ` <span class="vh">${t.curMonth}</span>` : ""}</th>`).join("") + "</tr></thead>";
     for (const g of ["veg", "fruit"]) {
       const gr = rows.filter(r => r.type === g);
       if (!gr.length) continue;
-      h += `<tr class="grp"><th colspan="13" scope="colgroup">${t[g]}</th></tr>`;
+      h += `<tbody><tr class="grp"><th colspan="13" scope="rowgroup">${t[g]}</th></tr>`;
       gr.sort((a, b) => a[state.lang].localeCompare(b[state.lang], state.lang));
       for (const r of gr) {
-        const flag = r.src === "B" ? ` <span class="sec" title="${t.approx}">~</span>` : "";
+        const flag = r.src === "B" ? ` <span class="sec" title="${t.approx}" aria-hidden="true">~</span><span class="vh">(${t.approx})</span>` : "";
         h += `<tr><th scope="row">${r[state.lang]}${flag} <span class="sec">${r[other]}</span></th>` +
           order.map(i => { const v = r.months[i]; return `<td class="${v ? "on" : ""} ${i === cur ? "cur" : ""}"><span class="dot" aria-hidden="true"></span><span class="vh">${v ? t.inSeason : t.notInSeason}</span></td>`; }).join("") + "</tr>";
       }
+      h += "</tbody>";
     }
-    $("grid").innerHTML = h + "</tbody>";
+    $("grid").innerHTML = h;
   }
 
   $("q").addEventListener("input", e => { state.q = e.target.value; render(); });
