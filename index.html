@@ -11,11 +11,14 @@
 <body>
 <a class="skip" href="#grid-wrap" id="skiplbl">Skip to table</a>
 <header>
-  <h1>Temporada</h1>
+  <div class="bar">
+    <h1>Temporada</h1>
+    <button id="settingsbtn" type="button" aria-haspopup="dialog"><span aria-hidden="true">⚙ </span><span id="settingslbl"></span></button>
+  </div>
   <p id="tagline"></p>
 </header>
 <main>
-<section class="controls" aria-label="Filtros">
+<section class="controls" id="filters" aria-label="Filtros">
   <input id="q" type="search" autocomplete="off">
   <div class="seg" role="group" id="type">
     <button data-v="all" aria-pressed="true"></button>
@@ -23,13 +26,6 @@
     <button data-v="fruit" aria-pressed="false"></button>
   </div>
   <label class="chk"><input id="now" type="checkbox"> <span id="nowlbl"></span></label>
-  <button id="rot" type="button"></button>
-  <button id="lang" type="button"></button>
-  <div class="seg" role="group" id="theme">
-    <button data-t="system" aria-pressed="false"></button>
-    <button data-t="light" aria-pressed="false"></button>
-    <button data-t="dark" aria-pressed="false"></button>
-  </div>
 </section>
 <p id="count" aria-live="polite"></p>
 <div class="wrap" id="grid-wrap" role="region" tabindex="0">
@@ -41,6 +37,26 @@
   <ul id="sources"></ul>
   <p id="caveat"></p>
 </footer>
+<dialog id="settings" aria-labelledby="settingsttl">
+  <h2 id="settingsttl"></h2>
+  <div class="field"><span id="langlbl" class="flbl"></span>
+    <div class="seg" role="group" id="langgrp">
+      <button type="button" data-l="es" lang="es" aria-pressed="false">Español</button>
+      <button type="button" data-l="en" lang="en" aria-pressed="false">English</button>
+    </div>
+  </div>
+  <div class="field"><span id="themelbl" class="flbl"></span>
+    <div class="seg" role="group" id="theme">
+      <button type="button" data-t="system" aria-pressed="false"></button>
+      <button type="button" data-t="light" aria-pressed="false"></button>
+      <button type="button" data-t="dark" aria-pressed="false"></button>
+    </div>
+  </div>
+  <div class="field"><span id="monthlbl" class="flbl"></span>
+    <button id="rot" type="button"></button>
+  </div>
+  <button id="closebtn" type="button" class="primary"></button>
+</dialog>
 <script src="data/produce.js"></script>
 <script src="app.js"></script>
 </body>
