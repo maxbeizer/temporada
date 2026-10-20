@@ -44,7 +44,7 @@
     document.querySelectorAll("#type button").forEach(b => {
       b.textContent = t[b.dataset.v]; b.setAttribute("aria-pressed", b.dataset.v === state.type);
     });
-    $("nowlbl").textContent = t.now;
+    $("nowlbl").textContent = t.now; $("typelbl").textContent = t.typeLbl;
     $("settingslbl").textContent = t.settings; $("settingsttl").textContent = t.settings;
     $("langlbl").textContent = t.langLbl; $("themelbl").textContent = t.themeLbl; $("monthlbl").textContent = t.monthLbl;
     $("closebtn").textContent = t.close;
