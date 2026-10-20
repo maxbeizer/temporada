@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Temporada — frutas y verduras de estación en Argentina</title>
+<meta name="description" content="Qué frutas y verduras están de temporada en Argentina, mes a mes. / What produce is in season in Argentina, month by month.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Temporada</h1>
+  <p id="tagline"></p>
+</header>
+<section class="controls" aria-label="Filtros">
+  <input id="q" type="search" autocomplete="off">
+  <div class="seg" role="group" id="type">
+    <button data-v="all" aria-pressed="true"></button>
+    <button data-v="veg" aria-pressed="false"></button>
+    <button data-v="fruit" aria-pressed="false"></button>
+  </div>
+  <label class="chk"><input id="now" type="checkbox"> <span id="nowlbl"></span></label>
+  <button id="lang" type="button"></button>
+</section>
+<p id="count" aria-live="polite"></p>
+<div class="wrap">
+  <table id="grid"></table>
+</div>
+<footer>
+  <h2 id="srch"></h2>
+  <ul id="sources"></ul>
+  <p id="caveat"></p>
+</footer>
+<script src="data/produce.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
