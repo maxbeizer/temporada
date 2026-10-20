@@ -9,10 +9,12 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip" href="#grid-wrap" id="skiplbl">Skip to table</a>
 <header>
   <h1>Temporada</h1>
   <p id="tagline"></p>
 </header>
+<main>
 <section class="controls" aria-label="Filtros">
   <input id="q" type="search" autocomplete="off">
   <div class="seg" role="group" id="type">
@@ -29,9 +31,10 @@
   </div>
 </section>
 <p id="count" aria-live="polite"></p>
-<div class="wrap">
+<div class="wrap" id="grid-wrap" role="region" tabindex="0">
   <table id="grid"></table>
 </div>
+</main>
 <footer>
   <h2 id="srch"></h2>
   <ul id="sources"></ul>
