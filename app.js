@@ -4,7 +4,7 @@
       months: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"],
       tagline: "Qué conviene comprar en la verdulería, mes a mes. Referencia: Buenos Aires y Pampa húmeda (hemisferio sur).",
       search: "Buscar…", all: "Todo", veg: "Verduras", fruit: "Frutas",
-      now: "De temporada ahora", lang: "English", rot: "Empezar por el mes actual", crop: "Producto",
+      now: "De temporada ahora", lang: "English", rot: "Empezar por el mes actual", inSeason: "de temporada", notInSeason: "fuera de temporada", curMonth: "(mes actual)", crop: "Producto",
       count: (n, t) => `${n} de ${t} productos`, none: "Sin resultados.",
       srch: "Fuentes y límites",
       caveat: "La temporada varía según la zona (Cuyo, NOA y Patagonia difieren) y la variedad. Es una guía general, no un dato de mercado. Los datos vienen de listas publicadas, no de mediciones propias; los meses de los productos marcados con ‘estacional’ son aproximados (por estación, no por mes).",
@@ -17,7 +17,7 @@
       months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
       tagline: "What to buy at the greengrocer, month by month. Reference: Buenos Aires and the Pampas (southern hemisphere).",
       search: "Search…", all: "All", veg: "Vegetables", fruit: "Fruit",
-      now: "In season now", lang: "Español", rot: "Start with current month", crop: "Produce",
+      now: "In season now", lang: "Español", rot: "Start with current month", inSeason: "in season", notInSeason: "not in season", curMonth: "(current month)", crop: "Produce",
       count: (n, t) => `${n} of ${t} items`, none: "No results.",
       srch: "Sources and limits",
       caveat: "Seasons vary by region (Cuyo, NOA and Patagonia differ) and by variety. This is a general guide, not market data. Data comes from published lists, not our own measurements; items marked ‘seasonal’ are approximate (by season, not by month).",
@@ -65,7 +65,7 @@
 
     const other = state.lang === "es" ? "en" : "es";
     let h = `<thead><tr><th scope="col">${t.crop}</th>` +
-      order.map(i => `<th scope="col" class="${i === cur ? "cur" : ""}">${t.months[i]}</th>`).join("") + "</tr></thead><tbody>";
+      order.map(i => `<th scope="col" class="${i === cur ? "cur" : ""}">${t.months[i]}${i === cur ? ` <span class="vh">${t.curMonth}</span>` : ""}</th>`).join("") + "</tr></thead><tbody>";
     for (const g of ["veg", "fruit"]) {
       const gr = rows.filter(r => r.type === g);
       if (!gr.length) continue;
@@ -74,7 +74,7 @@
       for (const r of gr) {
         const flag = r.src === "B" ? ` <span class="sec" title="${t.approx}">~</span>` : "";
         h += `<tr><th scope="row">${r[state.lang]}${flag} <span class="sec">${r[other]}</span></th>` +
-          order.map(i => { const v = r.months[i]; return `<td class="${v ? "on" : ""} ${i === cur ? "cur" : ""}"${v ? ` aria-label="${t.months[i]}: ✓"` : ""}><span class="dot"></span></td>`; }).join("") + "</tr>";
+          order.map(i => { const v = r.months[i]; return `<td class="${v ? "on" : ""} ${i === cur ? "cur" : ""}"><span class="dot" aria-hidden="true"></span><span class="vh">${v ? t.inSeason : t.notInSeason}</span></td>`; }).join("") + "</tr>";
       }
     }
     $("grid").innerHTML = h + "</tbody>";
