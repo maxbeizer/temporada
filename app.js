@@ -1,116 +1,86 @@
 (() => {
   const T = {
-    months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-    plant: 'Plant', buy: 'Buy', location: 'Belgrano, Buenos Aires', skip: 'Skip to crops',
-    view: 'Crop view', search: 'Search crops', previous: 'Previous month', next: 'Next month', current: 'Current month',
-    theme: 'Theme', system: 'System', light: 'Light', dark: 'Dark',
-    seedStart: 'Start seeds', directSow: 'Sow directly', transplant: 'Transplant', sow: 'Sow (method unspecified)',
-    unknown: 'Schedule unknown', inactive: 'No listed activity this month', available: 'In season to buy',
-    unavailable: 'Not in the listed buying season', details: 'Schedule and sources', annual: 'Annual schedule',
-    noSchedule: 'No researched schedule is available. Unknown does not mean unsuitable.',
-    noSources: 'No source is listed for this schedule.', sources: 'Sources',
-    storageRead: 'Saved preferences are unavailable. Plant is the default; you can still change views.',
-    storageWrite: 'Your preference could not be saved. Navigation still works for this visit.',
-    invalidView: 'The saved view was invalid. Plant is selected; choose Plant or Buy to save a new preference.',
-    invalidTheme: 'The saved theme was invalid. The system theme is being used.',
-    dataError: 'The crop catalog could not be loaded. Please reload or try again when online.',
-    empty: 'No crops match your search.', noOpportunities: 'No researched opportunities are listed for this month. Search for a crop to see its annual schedule or data gaps.', timing: 'Monthly guidance, not a guarantee. Local conditions can shift timing.',
-    count: (n, total, view, month) => `${view}: ${n} of ${total} crops for ${month}.`,
-    currentLabel: month => `${month} (current Buenos Aires month)`,
-    activeMonths: months => `Months: ${months}.`,
+    es: {
+      months: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"],
+      search: "Buscar…", all: "Todo", veg: "Verduras", fruit: "Frutas",
+      now: "De temporada ahora", lang: "English", rot: "Empezar por el mes actual", inSeason: "de temporada", notInSeason: "fuera de temporada", curMonth: "(mes actual)", crop: "Producto",
+      count: (n, t) => `${n} de ${t} productos`, none: "Sin resultados.",
+      themeLbl: "Tema", typeLbl: "Tipo", filters: "Filtros", skip: "Ir a la tabla", cap: "Calendario de temporada por producto y mes", region: "Calendario (desplazable)", system: "Sistema", light: "Claro", dark: "Oscuro", settings: "Ajustes", langLbl: "Idioma", monthLbl: "Orden de meses", close: "Listo"
+    },
+    en: {
+      months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+      search: "Search…", all: "All", veg: "Vegetables", fruit: "Fruit",
+      now: "In season now", lang: "Español", rot: "Start with current month", inSeason: "in season", notInSeason: "not in season", curMonth: "(current month)", crop: "Produce",
+      count: (n, t) => `${n} of ${t} items`, none: "No results.",
+      themeLbl: "Theme", typeLbl: "Type", filters: "Filters", skip: "Skip to table", cap: "Seasonality by produce item and month", region: "Calendar (scrollable)", system: "System", light: "Light", dark: "Dark", settings: "Settings", langLbl: "Language", monthLbl: "Month order", close: "Done"
+    }
   };
   const $ = id => document.getElementById(id);
-  const views = ['plant', 'buy'];
-  const themes = ['system', 'light', 'dark'];
-  const notices = new Set();
-  function read(key) {
-    try { return localStorage.getItem(key); }
-    catch { notices.add(T.storageRead); return null; }
-  }
-  function save(key, value) {
-    try { localStorage.setItem(key, value); }
-    catch { notices.add(T.storageWrite); }
-  }
-  const savedView = read('view');
-  const savedTheme = read('theme');
-  if (savedView !== null && !views.includes(savedView)) notices.add(T.invalidView);
-  if (savedTheme !== null && !themes.includes(savedTheme)) notices.add(T.invalidTheme);
-  const state = { view: views.includes(savedView) ? savedView : 'plant', theme: themes.includes(savedTheme) ? savedTheme : 'system', month: 1, q: '' };
-  function currentMonth() {
-    return Number(new Intl.DateTimeFormat('en-US', { timeZone: 'America/Argentina/Buenos_Aires', month: 'numeric' }).format(new Date()));
-  }
-  state.month = currentMonth();
-  const loaded = Array.isArray(window.CROPS) && window.SOURCES && typeof window.SOURCES === 'object';
-  const crops = loaded ? window.CROPS : [];
-  const sources = new Map(loaded ? Object.entries(window.SOURCES) : []);
-  const escape = value => String(value ?? '').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
-  const norm = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  function entries(crop) {
-    return state.view === 'buy' ? (crop.buy === null ? null : [crop.buy]) : crop.plant;
-  }
-  function sourceMarkup(ids) {
-    if (!ids.length) return `<p>${T.noSources}</p>`;
-    return `<ul class="sources">${ids.map(id => {
-      const source = sources.get(id);
-      if (!source) return `<li>${T.noSources} (${escape(id)})</li>`;
-      let url;
-      try { const parsed = new URL(source.url); if (['https:', 'http:'].includes(parsed.protocol)) url = parsed.href; } catch { /* Invalid source URLs remain readable text. */ }
-      const title = escape(source.title);
-      return `<li>${url ? `<a href="${escape(url)}">${title}</a>` : title}<p>${[source.region, source.precision, source.note].filter(Boolean).map(escape).join(' · ')}</p></li>`;
-    }).join('')}</ul>`;
-  }
-  function card(crop) {
-    const schedule = entries(crop);
-    const known = Array.isArray(schedule);
-    const active = known ? schedule.filter(entry => entry.months.includes(state.month)) : [];
-    const status = !known ? T.unknown : state.view === 'buy' ? (active.length ? T.available : T.unavailable) : (active.length ? active.map(entry => T[entry.action]).join(' · ') : T.inactive);
-    const annual = known ? schedule.map(entry => {
-      const action = state.view === 'buy' ? T.buy : T[entry.action];
-      const months = entry.months.map(month => T.months[month - 1]).join(', ');
-      return `<section class="schedule"><h4>${escape(action)}</h4><p>${escape(T.activeMonths(months))}</p>${entry.note ? `<p>${escape(entry.note)}</p>` : ''}<h5>${T.sources}</h5>${sourceMarkup(entry.sources)}</section>`;
-    }).join('') : `<p>${T.noSchedule}</p>`;
-    return `<li class="crop-card"><article><h3><span class="emoji" aria-hidden="true">${escape(crop.emoji)}</span>${escape(crop.name)}</h3><p class="status${active.length ? ' active' : ''}">${escape(status)}</p><details><summary>${T.details}<span class="vh">: ${escape(crop.name)}</span></summary><h4>${T.annual}</h4>${annual}</details></article></li>`;
-  }
+  const store = { get: k => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch {} } };
+  const THEMES = ["system", "light", "dark"];
+  const stored = store.get("lang");
+  const state = { lang: stored || ((navigator.language || "").toLowerCase().startsWith("es") ? "es" : "en"), theme: THEMES.includes(store.get("theme")) ? store.get("theme") : "system", rot: store.get("rot") !== "0", type: "all", now: false, q: "" };
+  const cur = new Date().getMonth(); // southern-hemisphere months match calendar months
+  const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
   function render() {
-    document.documentElement.lang = 'en';
-    if (state.theme === 'system') delete document.documentElement.dataset.theme;
+    const order = [...Array(12).keys()].map(i => state.rot ? (cur + i) % 12 : i);
+    const t = T[state.lang];
+    document.documentElement.lang = state.lang;
+    $("q").placeholder = t.search; $("q").setAttribute("aria-label", t.search);
+    document.querySelectorAll("#type button").forEach(b => {
+      b.textContent = t[b.dataset.v]; b.setAttribute("aria-pressed", b.dataset.v === state.type);
+    });
+    $("nowlbl").textContent = t.now; $("typelbl").textContent = t.typeLbl;
+    $("settingslbl").textContent = t.settings; $("settingsttl").textContent = t.settings;
+    $("langlbl").textContent = t.langLbl; $("themelbl").textContent = t.themeLbl; $("monthlbl").textContent = t.monthLbl;
+    $("closebtn").textContent = t.close;
+    $("langgrp").setAttribute("aria-label", t.langLbl);
+    document.querySelectorAll("#langgrp button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === state.lang));
+    $("filters").setAttribute("aria-label", t.filters);
+    $("skiplbl").textContent = t.skip;
+    $("type").setAttribute("aria-label", t.typeLbl);
+    $("grid").parentElement.setAttribute("aria-label", t.region);
+    $("theme").setAttribute("aria-label", t.themeLbl);
+    document.querySelectorAll("#theme button").forEach(b => {
+      b.textContent = t[b.dataset.t]; b.setAttribute("aria-pressed", b.dataset.t === state.theme);
+    });
+    if (state.theme === "system") delete document.documentElement.dataset.theme;
     else document.documentElement.dataset.theme = state.theme;
-    document.querySelectorAll('#view button').forEach(button => button.setAttribute('aria-pressed', button.dataset.view === state.view));
-    document.querySelectorAll('#theme button').forEach(button => button.setAttribute('aria-pressed', button.dataset.theme === state.theme));
-    $('month-name').textContent = T.months[state.month - 1];
-    $('month-note').textContent = state.month === currentMonth() ? T.currentLabel(T.months[state.month - 1]) : '';
-    const query = norm(state.q.trim());
-    const rows = crops.filter(crop => {
-      if (!norm(crop.name).includes(query)) return false;
-      const schedule = entries(crop);
-      return query || (schedule !== null && schedule.some(entry => entry.months.includes(state.month)));
-    }).sort((a, b) => a.name.localeCompare(b.name, 'en'));
-    $('cards').innerHTML = rows.map(card).join('');
-    $('count').textContent = T.count(rows.length, crops.length, T[state.view], T.months[state.month - 1]);
-    $('empty').textContent = loaded && !rows.length ? (query ? T.empty : T.noOpportunities) : '';
-    $('data-error').textContent = loaded ? '' : T.dataError;
-    $('preference-status').textContent = [...notices].join(' ');
+    $("rot").textContent = t.rot; $("rot").setAttribute("aria-pressed", state.rot);
+
+    const q = norm(state.q);
+    const rows = window.PRODUCE.filter(p =>
+      (state.type === "all" || p.type === state.type) &&
+      (!state.now || p.months[cur]) &&
+      (!q || norm(p.es).includes(q) || norm(p.en).includes(q)));
+    $("count").textContent = rows.length ? t.count(rows.length, window.PRODUCE.length) : t.none;
+
+    const other = state.lang === "es" ? "en" : "es";
+    let h = `<caption class="vh">${t.cap}</caption><thead><tr><th scope="col">${t.crop}</th>` +
+      order.map(i => `<th scope="col" class="${i === cur ? "cur" : ""}">${t.months[i]}${i === cur ? ` <span class="vh">${t.curMonth}</span>` : ""}</th>`).join("") + "</tr></thead>";
+    for (const g of ["veg", "fruit"]) {
+      const gr = rows.filter(r => r.type === g);
+      if (!gr.length) continue;
+      h += `<tbody><tr class="grp"><th colspan="13" scope="rowgroup">${t[g]}</th></tr>`;
+      gr.sort((a, b) => a[state.lang].localeCompare(b[state.lang], state.lang));
+      for (const r of gr) {
+        h += `<tr><th scope="row">${r[state.lang]} <span class="sec">${r[other]}</span></th>` +
+          order.map(i => { const v = r.months[i]; return `<td class="${v ? "on" : ""} ${i === cur ? "cur" : ""}"><span class="dot" aria-hidden="true"></span><span class="vh">${v ? t.inSeason : t.notInSeason}</span></td>`; }).join("") + "</tr>";
+      }
+      h += "</tbody>";
+    }
+    $("grid").innerHTML = h;
   }
-  for (const [id, key] of Object.entries({ 'skip': 'skip', 'location': 'location', 'search-label': 'search', 'previous': 'previous', 'next': 'next', 'current': 'current', 'plant': 'plant', 'buy': 'buy', 'theme-label': 'theme', 'system': 'system', 'light': 'light', 'dark': 'dark', 'timing': 'timing' })) $(id).textContent = T[key];
-  $('view').setAttribute('aria-label', T.view);
-  $('theme').setAttribute('aria-label', T.theme);
-  $('view').addEventListener('click', event => {
-    const button = event.target.closest('button[data-view]');
-    if (!button || !views.includes(button.dataset.view)) return;
-    state.view = button.dataset.view; save('view', state.view); render();
-  });
-  $('theme').addEventListener('click', event => {
-    const button = event.target.closest('button[data-theme]');
-    if (!button || !themes.includes(button.dataset.theme)) return;
-    state.theme = button.dataset.theme; save('theme', state.theme); render();
-  });
-  $('q').addEventListener('input', event => { state.q = event.target.value; render(); });
-  $('previous').addEventListener('click', () => { state.month = (state.month + 10) % 12 + 1; render(); });
-  $('next').addEventListener('click', () => { state.month = state.month % 12 + 1; render(); });
-  $('current').addEventListener('click', () => { state.month = currentMonth(); render(); });
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') { state.month = currentMonth(); render(); }
-  });
-  window.addEventListener('pageshow', () => { state.month = currentMonth(); render(); });
+
+  $("q").addEventListener("input", e => { state.q = e.target.value; render(); });
+  $("now").addEventListener("change", e => { state.now = e.target.checked; render(); });
+  $("rot").addEventListener("click", () => { state.rot = !state.rot; store.set("rot", state.rot ? "1" : "0"); render(); });
+  $("langgrp").addEventListener("click", e => { const l = e.target.dataset.l; if (l) { state.lang = l; store.set("lang", l); render(); } });
+  $("settingsbtn").addEventListener("click", () => $("settings").showModal());
+  $("closebtn").addEventListener("click", () => $("settings").close());
+  $("settings").addEventListener("click", e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
+  $("theme").addEventListener("click", e => { if (THEMES.includes(e.target.dataset.t)) { state.theme = e.target.dataset.t; store.set("theme", state.theme); render(); } });
+  $("type").addEventListener("click", e => { if (e.target.dataset.v) { state.type = e.target.dataset.v; render(); } });
   render();
 })();

@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const path = require('node:path');
 
-const code = fs.readFileSync(path.join(__dirname, '../app.js'), 'utf8');
+const code = fs.readFileSync(path.join(__dirname, '../app-v2.js'), 'utf8');
 const fixture = { sources: [{ id: 'fixture', title: 'Test source', url: 'https://example.com', region: 'Test region', precision: 'Monthly', note: 'Fixture only' }], crops: [
   { id: 'a', name: 'Alpha', emoji: '🥬', category: 'vegetable', buy: { months: [3], sources: ['fixture'], note: 'Fixture buying note' }, plant: [{ action: 'sow', months: [3], sources: ['fixture'], note: 'Fixture planting note' }] },
   { id: 'b', name: 'Beta', emoji: '🌱', category: 'herb', buy: null, plant: null },
@@ -17,8 +17,14 @@ function boot({ stored = {}, unavailable = false, date = '2026-04-01T01:00:00Z',
     return elements.get(id);
   }
   const storage = new Map(Object.entries(stored));
+  const documentListeners = {};
+  const windowListeners = {};
   class Clock extends Date { constructor(...args) { super(...(args.length ? args : [date])); } }
   const context = { window: { CROPS: catalog?.crops, SOURCES: catalog ? Object.fromEntries(catalog.sources.map(source => [source.id, source])) : undefined, addEventListener() {} }, document: { documentElement: { dataset: {} }, getElementById: element, querySelectorAll: () => [], addEventListener() {} }, localStorage: { getItem(k) { if (unavailable) throw Error('blocked'); return storage.get(k) ?? null; }, setItem(k, v) { if (unavailable) throw Error('blocked'); storage.set(k, v); } }, Date: Clock, Intl, console, setTimeout, URL };
+  context.document.addEventListener = (name, listener) => { documentListeners[name] = listener; };
+  context.window.addEventListener = (name, listener) => { windowListeners[name] = listener; };
+  context.document.listeners = documentListeners;
+  context.window.listeners = windowListeners;
   vm.runInNewContext(code, context);
   return { element, storage, context, click(id, data) { element(id).listeners.click({ target: { dataset: data, closest() { return this; } } }); } };
 }
@@ -101,6 +107,22 @@ test('theme choices persist and system removes explicit override', () => {
   assert.equal(ui.storage.get('theme'), 'light');
   ui.click('theme', { theme: 'system' });
   assert.equal(ui.context.document.documentElement.dataset.theme, undefined);
+});
+
+test('resuming preserves browsed month, search and card DOM', () => {
+  const ui = boot();
+  ui.click('next', {});
+  ui.element('q').listeners.input({ target: { value: 'alpha' } });
+  const cards = ui.element('cards');
+  let replacements = 0;
+  const markup = cards.innerHTML;
+  Object.defineProperty(cards, 'innerHTML', { get: () => markup, set() { replacements++; } });
+  ui.context.document.visibilityState = 'visible';
+  ui.context.document.listeners.visibilitychange();
+  ui.context.window.listeners.pageshow({ persisted: true });
+  assert.equal(ui.element('month-name').textContent, 'April');
+  assert.equal(replacements, 0);
+  assert.equal(cards.innerHTML, markup);
 });
 
 test('first visit uses Plant and the Buenos Aires month, not UTC', () => {

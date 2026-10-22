@@ -166,7 +166,7 @@ SEASONS = {
 CITY_AUTUMN = 'onion radish beet carrot chard spinach lettuce parsley leek peas'.split()
 ALL_YEAR = 'chard carrot arugula radish'.split()
 
-# INTA p. 2: only unambiguous explicitly dated method rows.
+# INTA pp. 1-2: only unambiguous explicitly dated method rows.
 # Separate tuples preserve separate windows rather than filling intervening months.
 INTA_ROWS: list[tuple[str, Literal['seedStart', 'directSow', 'transplant', 'sow'], list[int], str]] = [
  ('basil', 'seedStart', [8, 9], 'Albahaca: almácigo Ago-Set.'),
@@ -195,6 +195,11 @@ INTA_ROWS: list[tuple[str, Literal['seedStart', 'directSow', 'transplant', 'sow'
  ('cauliflower', 'seedStart', [2, 3], 'Coliflor: almácigo Feb-Mar.'),
  ('cauliflower', 'transplant', [3, 4], 'Coliflor: transplante Mar-Abr.'),
  ('escarole', 'directSow', [2, 3], 'Escarola: directa Feb-Mar.'),
+ ('chicory', 'directSow', [2, 3, 4, 5], 'Radicheta o Achicoria: directa a chorrillo Feb-May.; autumn-winter table.'),
+ ('celery', 'seedStart', [9, 10, 11], 'Apio: almácigo Sept-Nov.; spring varieties Platense and Golden Boy, page 1.'),
+ ('celery', 'transplant', [12, 1, 2, 3], 'Apio: transplante Dic-Mar.; spring varieties Platense and Golden Boy, page 1.'),
+ ('celery', 'seedStart', [3], 'Apio: almácigo Marzo; autumn varieties Verde de Cortar and De Verdeo, page 1.'),
+ ('celery', 'transplant', [5], 'Apio: transplante Mayo; autumn varieties Verde de Cortar and De Verdeo, page 1.'),
 ]
 
 def build_catalog() -> Catalog:
@@ -288,11 +293,11 @@ def main():
     parser.add_argument('--check', action='store_true', help='fail if generated output is stale')
     args = parser.parse_args()
     catalog = build_catalog()
-    output = ROOT / 'data' / 'produce.js'
+    output = ROOT / 'data' / 'crops-v2.js'
     text = render(catalog)
     if args.check:
         if not output.exists() or output.read_text(encoding='utf-8') != text:
-            parser.exit(1, 'data/produce.js is stale; run python3 scripts/build_data.py\n')
+            parser.exit(1, 'data/crops-v2.js is stale; run python3 scripts/build_data.py\n')
     else:
         output.write_text(text, encoding='utf-8')
     crops = catalog['crops']

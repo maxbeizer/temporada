@@ -17,10 +17,10 @@ class CatalogTests(unittest.TestCase):
         self.crops = {crop['id']: crop for crop in self.catalog['crops']}
 
     def test_generated_output_is_current(self):
-        self.assertEqual((ROOT / 'data/produce.js').read_text(), build_data.render(self.catalog))
+        self.assertEqual((ROOT / 'data/crops-v2.js').read_text(), build_data.render(self.catalog))
 
     def test_browser_exports_execute(self):
-        result = subprocess.run(['node', '-e', "const fs=require('node:fs'),vm=require('node:vm');const ctx={window:{}};vm.runInNewContext(fs.readFileSync('data/produce.js','utf8'),ctx);process.stdout.write(JSON.stringify({sources:ctx.window.SOURCES,crops:ctx.window.CROPS}));"], cwd=ROOT, text=True, capture_output=True, check=True)
+        result = subprocess.run(['node', '-e', "const fs=require('node:fs'),vm=require('node:vm');const ctx={window:{}};vm.runInNewContext(fs.readFileSync('data/crops-v2.js','utf8'),ctx);process.stdout.write(JSON.stringify({sources:ctx.window.SOURCES,crops:ctx.window.CROPS}));"], cwd=ROOT, text=True, capture_output=True, check=True)
         import json
         self.assertEqual(json.loads(result.stdout), self.catalog)
 
@@ -54,6 +54,21 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(self.crops['apple']['plant'], [])
         self.assertIsNone(self.crops['pear']['plant'])
         self.assertFalse(any(crop['plant'] == [] for crop in build_data.build_catalog()['crops']))
+
+    def test_explicit_inta_chicory_and_celery_windows(self):
+        self.assertEqual(
+            [(w['action'], w['months']) for w in self.crops['chicory']['plant']],
+            [('directSow', [2, 3, 4, 5])],
+        )
+        self.assertEqual(
+            [(w['action'], w['months']) for w in self.crops['celery']['plant']],
+            [('seedStart', [9, 10, 11]), ('transplant', [12, 1, 2, 3]),
+             ('seedStart', [3]), ('transplant', [5])],
+        )
+        for key in ('chicory', 'celery'):
+            for window in self.crops[key]['plant']:
+                self.assertEqual(window['sources'], ['inta-calendar'])
+                self.assertIn('coverage is not explicitly stated', window['note'])
 
     def test_market_precedence(self):
         for key in ('winter-squash', 'fennel', 'apple', 'pear'):
