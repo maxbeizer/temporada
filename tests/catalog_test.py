@@ -48,11 +48,10 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(windows, [[8, 9], [2, 3]])
         self.assertFalse(any(5 in months for months in windows))
 
-    def test_empty_plant_is_distinct_from_unknown(self):
+    def test_empty_plant_is_rejected(self):
         self.crops['apple']['plant'] = []
-        build_data.validate_catalog(self.catalog)
-        self.assertEqual(self.crops['apple']['plant'], [])
-        self.assertIsNone(self.crops['pear']['plant'])
+        with self.assertRaises(ValueError):
+            build_data.validate_catalog(self.catalog)
         self.assertFalse(any(crop['plant'] == [] for crop in build_data.build_catalog()['crops']))
 
     def test_explicit_inta_chicory_and_celery_windows(self):
@@ -69,6 +68,12 @@ class CatalogTests(unittest.TestCase):
             for window in self.crops[key]['plant']:
                 self.assertEqual(window['sources'], ['inta-calendar'])
                 self.assertIn('coverage is not explicitly stated', window['note'])
+
+    def test_explicit_inta_parsley_window(self):
+        self.assertIn(
+            ('directSow', [9]),
+            [(window['action'], window['months']) for window in self.crops['parsley']['plant']],
+        )
 
     def test_market_precedence(self):
         for key in ('winter-squash', 'fennel', 'apple', 'pear'):
@@ -99,6 +104,14 @@ class CatalogTests(unittest.TestCase):
                 catalog = copy.deepcopy(self.catalog)
                 crop = next(c for c in catalog['crops'] if c['id'] == 'basil')
                 crop['plant'][0][field] = value
+                with self.assertRaises(ValueError):
+                    build_data.validate_catalog(catalog)
+
+    def test_invalid_https_source_urls(self):
+        for value in ('https://', 'https:// bad', 'https://?x', 'https://example.com:bad', 'https://example.com:99999'):
+            with self.subTest(value=value):
+                catalog = copy.deepcopy(self.catalog)
+                catalog['sources']['national-buy']['url'] = value
                 with self.assertRaises(ValueError):
                     build_data.validate_catalog(catalog)
 

@@ -11,6 +11,7 @@ import json
 import pathlib
 import re
 from typing import Literal, TypedDict
+from urllib.parse import urlsplit
 
 
 class Source(TypedDict):
@@ -184,6 +185,7 @@ INTA_ROWS: list[tuple[str, Literal['seedStart', 'directSow', 'transplant', 'sow'
  ('tomato', 'seedStart', [9, 10], 'Tomate: almácigo Sep-Oct.'),
  ('tomato', 'transplant', [10, 11], 'Tomate: transplante Oct-Nov.'),
  ('summer-squash', 'directSow', [10, 11, 12, 1], 'Zapallito: directa Oct-Ene.; window crosses the year boundary.'),
+ ('parsley', 'directSow', [9], 'Perejil: directa a chorrillo Setiembre.'),
  ('garlic', 'directSow', [3, 4], 'Ajo: directa Mar-Abr.; planting cloves, not seed starting.'),
  ('peas', 'directSow', [6, 7, 8], 'Arveja: directa Jun-Ago.; City separately supports unspecified autumn sowing.'),
  ('broccoli', 'seedStart', [2, 3], 'Brócoli: almácigo Feb-Mar.'),
@@ -252,7 +254,14 @@ def validate_catalog(catalog):
         require(isinstance(key, str) and re.fullmatch(r'[a-z][a-z0-9]*(?:-[a-z0-9]+)*', key), 'source ID')
         require(isinstance(source, dict) and set(source) == {'title', 'url', 'region', 'precision', 'note'}, 'source shape')
         require(all(isinstance(value, str) and value.strip() for value in source.values()), 'source metadata')
-        require(source['url'].startswith('https://'), 'source URL')
+        try:
+            parsed_url = urlsplit(source['url'])
+            _ = parsed_url.port
+            valid_url = (parsed_url.scheme == 'https' and bool(parsed_url.netloc) and
+                         bool(parsed_url.hostname) and not any(char.isspace() for char in parsed_url.netloc))
+        except ValueError:
+            valid_url = False
+        require(valid_url, 'source URL')
     require(isinstance(catalog['crops'], list) and bool(catalog['crops']), 'crop list')
     ids = set()
     for crop in catalog['crops']:
@@ -264,7 +273,7 @@ def validate_catalog(catalog):
         require(all(isinstance(crop[field], str) and crop[field].strip() for field in ('name', 'emoji')), 'crop labels')
         require(crop['category'] in ('vegetable', 'fruit', 'herb'), 'crop category')
         require(crop['buy'] is None or isinstance(crop['buy'], dict), 'buy shape')
-        require(crop['plant'] is None or isinstance(crop['plant'], list), 'plant shape')
+        require(crop['plant'] is None or (isinstance(crop['plant'], list) and bool(crop['plant'])), 'plant shape')
         windows = [] if crop['buy'] is None else [(crop['buy'], False)]
         if crop['plant'] is not None:
             windows += [(window, True) for window in crop['plant']]

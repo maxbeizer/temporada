@@ -46,6 +46,9 @@ test('invalid preferences visibly fall back without breaking navigation', () => 
   assert.match(ui.element('preference-status').textContent, /saved theme was invalid/);
   ui.click('view', { view: 'buy' });
   assert.match(ui.element('count').textContent, /^Buy:/);
+  assert.doesNotMatch(ui.element('preference-status').textContent, /saved view was invalid/);
+  ui.click('theme', { theme: 'dark' });
+  assert.doesNotMatch(ui.element('preference-status').textContent, /saved theme was invalid/);
 });
 
 test('unavailable storage is visible and does not prevent view changes', () => {
@@ -123,6 +126,15 @@ test('resuming preserves browsed month, search and card DOM', () => {
   assert.equal(ui.element('month-name').textContent, 'April');
   assert.equal(replacements, 0);
   assert.equal(cards.innerHTML, markup);
+});
+
+test('back-forward restoration returns focus to the source link', () => {
+  const ui = boot();
+  let focused = false;
+  const sourceLink = { isConnected: true, focus() { focused = true; } };
+  ui.element('cards').listeners.click({ target: { closest: selector => selector === 'a' ? sourceLink : null } });
+  ui.context.window.listeners.pageshow({ persisted: true });
+  assert.equal(focused, true);
 });
 
 test('first visit uses Plant and the Buenos Aires month, not UTC', () => {

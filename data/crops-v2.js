@@ -1235,6 +1235,16 @@ window.CROPS = [
           "city-autumn"
         ],
         "note": "Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting."
+      },
+      {
+        "action": "directSow",
+        "months": [
+          9
+        ],
+        "sources": [
+          "inta-calendar"
+        ],
+        "note": "Perejil: directa a chorrillo Setiembre. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
       }
     ]
   },

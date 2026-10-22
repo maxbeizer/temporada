@@ -2,7 +2,7 @@
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0 auto;max-width:64rem;padding:1rem;background:var(--bg);color:var(--fg);font:1rem/1.5 system-ui,sans-serif;overflow-wrap:anywhere}
-h1{margin:0;font-size:2rem}h2{font-size:1.1rem}h3{font-size:1.25rem;margin:0 0 .75rem}h4,h5{font-size:1rem;margin:.75rem 0 .25rem}p{margin:.5rem 0 1rem}
+h1{margin:0;font-size:2rem}h2{font-size:1.1rem}h3{font-size:1.25rem;margin:0 0 .75rem}h4,h5,h6{font-size:1rem;margin:.75rem 0 .25rem}p{margin:.5rem 0 1rem}
 header{margin-bottom:1.5rem}header p,.muted{color:var(--mut)}
 button,input{font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:.5rem;min-height:44px;padding:.55rem .75rem}
 button,summary{cursor:pointer}button{white-space:normal}button[aria-pressed=true]{background:var(--on);color:var(--on-fg);border:2px solid var(--on);font-weight:700;text-decoration:underline;text-underline-offset:.25em}

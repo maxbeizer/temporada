@@ -67,7 +67,7 @@
     const annual = known ? schedule.map(entry => {
       const action = state.view === 'buy' ? T.buy : T[entry.action];
       const months = entry.months.map(month => T.months[month - 1]).join(', ');
-      return `<section class="schedule"><h4>${escape(action)}</h4><p>${escape(T.activeMonths(months))}</p>${entry.note ? `<p>${escape(entry.note)}</p>` : ''}<h5>${T.sources}</h5>${sourceMarkup(entry.sources)}</section>`;
+      return `<section class="schedule"><h5>${escape(action)}</h5><p>${escape(T.activeMonths(months))}</p>${entry.note ? `<p>${escape(entry.note)}</p>` : ''}<h6>${T.sources}</h6>${sourceMarkup(entry.sources)}</section>`;
     }).join('') : `<p>${T.noSchedule}</p>`;
     return `<li class="crop-card"><article><h3><span class="emoji" aria-hidden="true">${escape(crop.emoji)}</span>${escape(crop.name)}</h3><p class="status${active.length ? ' active' : ''}">${escape(status)}</p><details><summary>${T.details}<span class="vh">: ${escape(crop.name)}</span></summary><h4>${T.annual}</h4>${annual}</details></article></li>`;
   }
@@ -103,12 +103,12 @@
   $('view').addEventListener('click', event => {
     const button = event.target.closest('button[data-view]');
     if (!button || !views.includes(button.dataset.view)) return;
-    state.view = button.dataset.view; save('view', state.view); render();
+    state.view = button.dataset.view; notices.delete(T.invalidView); save('view', state.view); render();
   });
   $('theme').addEventListener('click', event => {
     const button = event.target.closest('button[data-theme]');
     if (!button || !themes.includes(button.dataset.theme)) return;
-    state.theme = button.dataset.theme; save('theme', state.theme); renderPreferences();
+    state.theme = button.dataset.theme; notices.delete(T.invalidTheme); save('theme', state.theme); renderPreferences();
   });
   $('q').addEventListener('input', event => { state.q = event.target.value; render(); });
   $('previous').addEventListener('click', () => { state.month = (state.month + 10) % 12 + 1; render(); });
@@ -117,9 +117,18 @@
   function refreshCurrentMonth() {
     $('month-note').textContent = state.month === currentMonth() ? T.currentLabel(T.months[state.month - 1]) : '';
   }
+  let returnFocus = null;
+  $('cards').addEventListener('click', event => {
+    const link = event.target.closest('a');
+    if (link) returnFocus = link;
+  });
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') refreshCurrentMonth();
   });
-  window.addEventListener('pageshow', refreshCurrentMonth);
+  window.addEventListener('pageshow', event => {
+    refreshCurrentMonth();
+    if (event.persisted && returnFocus?.isConnected) returnFocus.focus();
+    returnFocus = null;
+  });
   render();
 })();

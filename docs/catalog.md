@@ -48,10 +48,10 @@ Never relabel `sow` as direct sowing or seed starting.
 
 `null` means unsupported/unknown, not inactive. An absent month in a supported
 schedule means outside that recommendation, not proof of impossibility or
-shop absence. `plant: []` is reserved for researched no-opportunity evidence;
-no production crop currently uses it. Empty month lists are invalid. The
-validator cannot certify research: any future empty Plant schedule requires
-an explicit explanation and source in these notes. Missing actions inside a
+shop absence. Empty Plant schedules and empty month lists are invalid because
+they cannot carry the explanation and source required for researched
+no-opportunity evidence. Add an explicit evidence-bearing model before using
+that state. Missing actions inside a
 supported Plant schedule remain unresearched; do not infer them from other
 actions.
 
@@ -77,8 +77,8 @@ direct Oct; pepper seed starting Jul-Aug, transplant Oct; green bean and
 summer squash direct Oct-Jan; tomato seed starting Sep-Oct, transplant
 Oct-Nov; garlic direct Mar-Apr; peas direct Jun-Aug; broccoli and cauliflower
 seed starting Feb-Mar, transplant Mar-Apr; bulb onion seed starting Mar-Apr,
-direct Apr; scallion seed starting Feb-Jun, direct Mar-May; escarole direct
-Feb-Mar; chicory direct Feb-May; celery seed starting Sep-Nov and Mar,
+direct Apr; scallion seed starting Feb-Jun, direct Mar-May; parsley direct
+September; escarole direct Feb-Mar; chicory direct Feb-May; celery seed starting Sep-Nov and Mar,
 transplant Dec-Mar and May (variety-specific). The generator includes the
 original Spanish row cue in each note.
 
