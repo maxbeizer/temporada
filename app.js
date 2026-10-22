@@ -14,7 +14,7 @@
     invalidView: 'The saved view was invalid. Plant is selected; choose Plant or Buy to save a new preference.',
     invalidTheme: 'The saved theme was invalid. The system theme is being used.',
     dataError: 'The crop catalog could not be loaded. Please reload or try again when online.',
-    empty: 'No crops match your search.', timing: 'Monthly guidance, not a guarantee. Local conditions can shift timing.',
+    empty: 'No crops match your search.', noOpportunities: 'No researched opportunities are listed for this month. Search for a crop to see its annual schedule or data gaps.', timing: 'Monthly guidance, not a guarantee. Local conditions can shift timing.',
     count: (n, total, view, month) => `${view}: ${n} of ${total} crops for ${month}.`,
     currentLabel: month => `${month} (current Buenos Aires month)`,
     activeMonths: months => `Months: ${months}.`,
@@ -61,7 +61,7 @@
   }
   function card(crop) {
     const schedule = entries(crop);
-    const known = Array.isArray(schedule) && schedule.length > 0;
+    const known = Array.isArray(schedule);
     const active = known ? schedule.filter(entry => entry.months.includes(state.month)) : [];
     const status = !known ? T.unknown : state.view === 'buy' ? (active.length ? T.available : T.unavailable) : (active.length ? active.map(entry => T[entry.action]).join(' · ') : T.inactive);
     const annual = known ? schedule.map(entry => {
@@ -80,10 +80,14 @@
     $('month-name').textContent = T.months[state.month - 1];
     $('month-note').textContent = state.month === currentMonth() ? T.currentLabel(T.months[state.month - 1]) : '';
     const query = norm(state.q.trim());
-    const rows = crops.filter(crop => norm(crop.name).includes(query)).slice().sort((a, b) => a.name.localeCompare(b.name, 'en'));
+    const rows = crops.filter(crop => {
+      if (!norm(crop.name).includes(query)) return false;
+      const schedule = entries(crop);
+      return query || (schedule !== null && schedule.some(entry => entry.months.includes(state.month)));
+    }).sort((a, b) => a.name.localeCompare(b.name, 'en'));
     $('cards').innerHTML = rows.map(card).join('');
     $('count').textContent = T.count(rows.length, crops.length, T[state.view], T.months[state.month - 1]);
-    $('empty').textContent = loaded && !rows.length ? T.empty : '';
+    $('empty').textContent = loaded && !rows.length ? (query ? T.empty : T.noOpportunities) : '';
     $('data-error').textContent = loaded ? '' : T.dataError;
     $('preference-status').textContent = [...notices].join(' ');
   }

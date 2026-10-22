@@ -1,27 +1,28 @@
-const CACHE = "temporada-v1";
-const SHELL = ["./", "index.html", "style.css", "app.js", "data/produce.js", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png"];
+const CACHE = "temporada-v2";
+const SHELL = ["./", "index.html", "style.css", "app.js", "data/produce.js", "manifest.webmanifest", "icons/icon.svg", "icons/icon-192.png", "icons/icon-512.png", "icons/icon-maskable-512.png"];
+const shellURLs = new Set(SHELL.map(path => new URL(path, self.registration.scope).href));
 
+// Wait for existing tabs to close before activating a coherent new shell.
 self.addEventListener("install", e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(CACHE).then(cache => cache.addAll(
+    SHELL.map(path => new Request(new URL(path, self.registration.scope), { cache: "reload" }))
+  )));
 });
 
 self.addEventListener("activate", e => {
-  e.waitUntil(
-    caches.keys()
-      .then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))
-      .then(() => self.clients.claim())
-  );
+  e.waitUntil(caches.keys().then(keys => Promise.all(
+    keys.filter(key => key.startsWith("temporada-") && key !== CACHE).map(key => caches.delete(key))
+  )));
 });
 
-// Stale-while-revalidate for same-origin GETs; falls back to cache offline.
 self.addEventListener("fetch", e => {
-  const r = e.request;
-  if (r.method !== "GET" || new URL(r.url).origin !== location.origin) return;
-  e.respondWith(
-    caches.open(CACHE).then(async c => {
-      const hit = await c.match(r, { ignoreSearch: true });
-      const net = fetch(r).then(res => { if (res.ok) c.put(r, res.clone()); return res; }).catch(() => hit);
-      return hit || net;
-    })
-  );
+  const request = e.request;
+  const url = new URL(request.url);
+  if (request.method !== "GET" || url.origin !== self.location.origin) return;
+  url.search = "";
+  if (!shellURLs.has(url.href)) return;
+  e.respondWith(caches.open(CACHE).then(async cache => {
+    const cached = await cache.match(url.href);
+    return cached || fetch(request);
+  }));
 });

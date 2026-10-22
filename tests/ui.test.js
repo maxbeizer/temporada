@@ -50,15 +50,21 @@ test('unavailable storage is visible and does not prevent view changes', () => {
   assert.match(ui.element('preference-status').textContent, /could not be saved/);
 });
 
-test('month navigation distinguishes inactive and unknown schedules', () => {
+test('monthly browsing shows opportunities; search includes inactive and unknown schedules', () => {
   const ui = boot();
   assert.match(ui.element('cards').innerHTML, /Sow \(method unspecified\)/);
-  assert.match(ui.element('cards').innerHTML, /Schedule unknown/);
+  assert.doesNotMatch(ui.element('cards').innerHTML, /Beta/);
   ui.click('next', {});
   assert.equal(ui.element('month-name').textContent, 'April');
+  assert.equal(ui.element('cards').innerHTML, '');
+  ui.element('q').listeners.input({ target: { value: 'alpha' } });
   assert.match(ui.element('cards').innerHTML, /No listed activity this month/);
+  ui.element('q').listeners.input({ target: { value: 'beta' } });
+  assert.match(ui.element('cards').innerHTML, /Schedule unknown/);
+  ui.element('q').listeners.input({ target: { value: '' } });
   ui.click('current', {});
   assert.equal(ui.element('month-name').textContent, 'March');
+  assert.match(ui.element('cards').innerHTML, /Alpha/);
   ui.click('previous', {});
   assert.equal(ui.element('month-name').textContent, 'February');
 });
