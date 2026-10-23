@@ -12,7 +12,28 @@
 <meta name="apple-mobile-web-app-title" content="Temporada">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style-v2.css">
+<script>
+(function(){
+  let started=false;
+  function load(src,next){const script=document.createElement('script');script.src=src;script.onload=next||null;document.body.append(script)}
+  function start(){
+    if(started)return;
+    const shell=document.getElementById('legacy-shell');
+    if(!shell)return;
+    started=true;
+    document.querySelector('link[href="style-v2.css"]')?.remove();
+    document.body.replaceChildren(shell.content.cloneNode(true));
+    const style=document.createElement('link');style.rel='stylesheet';style.href='style.css';document.head.append(style);
+    load('data/produce.js',()=>load('app.js'));
+  }
+  window.legacyFallback=function(){
+    window.legacyMode=true;
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});
+    else start();
+  };
+})();
+</script>
+<link rel="stylesheet" href="style-v2.css" onerror="legacyFallback()">
 </head>
 <body>
 <a class="skip" href="#crops" id="skip"></a>
@@ -46,8 +67,31 @@
   <button id="dark" type="button" data-theme="dark" aria-pressed="false"></button>
 </div></footer>
 <noscript>JavaScript is needed to display the crop catalog and month controls.</noscript>
-<script src="data/crops-v2.js"></script>
-<script src="app-v2.js"></script>
+<template id="legacy-shell">
+  <a class="skip" href="#grid-wrap" id="skiplbl">Skip to table</a>
+  <header><div class="bar"><h1>Temporada</h1><button id="settingsbtn" type="button" aria-haspopup="dialog"><span aria-hidden="true">⚙ </span><span id="settingslbl"></span></button></div></header>
+  <main>
+    <section class="controls" id="filters" aria-label="Filters"><input id="q" type="search" autocomplete="off"></section>
+    <p id="count" aria-live="polite"></p>
+    <div class="wrap" id="grid-wrap" role="region" tabindex="0"><table id="grid"></table></div>
+  </main>
+  <dialog id="settings" aria-labelledby="settingsttl">
+    <h2 id="settingsttl"></h2>
+    <div class="field"><span id="typelbl" class="flbl"></span><div class="seg" role="group" id="type"><button type="button" data-v="all" aria-pressed="true"></button><button type="button" data-v="veg" aria-pressed="false"></button><button type="button" data-v="fruit" aria-pressed="false"></button></div></div>
+    <div class="field"><label class="chk"><input id="now" type="checkbox"> <span id="nowlbl"></span></label></div>
+    <div class="field"><span id="langlbl" class="flbl"></span><div class="seg" role="group" id="langgrp"><button type="button" data-l="es" lang="es" aria-pressed="false">Español</button><button type="button" data-l="en" lang="en" aria-pressed="false">English</button></div></div>
+    <div class="field"><span id="themelbl" class="flbl"></span><div class="seg" role="group" id="theme"><button type="button" data-t="system" aria-pressed="false"></button><button type="button" data-t="light" aria-pressed="false"></button><button type="button" data-t="dark" aria-pressed="false"></button></div></div>
+    <div class="field"><span id="monthlbl" class="flbl"></span><button id="rot" type="button"></button></div>
+    <button id="closebtn" type="button" class="primary"></button>
+  </dialog>
+</template>
+<script>
+if(!window.legacyMode){
+  const data=document.createElement('script');data.src='data/crops-v2.js';data.onerror=legacyFallback;
+  data.onload=function(){if(!window.legacyMode){const app=document.createElement('script');app.src='app-v2.js';app.onerror=legacyFallback;document.body.append(app)}};
+  document.body.append(data);
+}
+</script>
 <script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){var p=document.createElement('p');p.textContent='Offline support could not be enabled. You can keep using this page online.';p.setAttribute('role','status');document.body.append(p)})})</script>
 </body>
 </html>

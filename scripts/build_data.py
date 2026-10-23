@@ -49,39 +49,39 @@ class Catalog(TypedDict):
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SOURCES: dict[str, Source] = {
     'central-autumn': {
-        'title': 'Mercado Central: Frutas y hortalizas de estación',
+        'title': 'Mercado Central: Seasonal fruit and vegetables',
         'url': 'https://mercadocentral.gob.ar/news/frutas-y-hortalizas-de-estaci%C3%B3n',
         'region': 'Mercado Central de Buenos Aires; market supply from multiple production regions',
         'precision': 'Autumn; editorial March-May bins, not exact trading dates',
-        'note': 'Explicitly identifies zapallo, hinojo, manzana and pera as autumn arrivals. Preferred over the national seasonal list for these four crops. A seasonal recommendation, not an exhaustive availability calendar or evidence of local cultivation.',
+        'note': 'Explicitly identifies winter squash, fennel, apple and pear as autumn arrivals. Preferred over the national seasonal list for these four crops. A seasonal recommendation, not an exhaustive availability calendar or evidence of local cultivation.',
     },
     'national-buy': {
-        'title': 'Argentina: Las frutas y verduras de estación',
+        'title': 'Argentina: Seasonal fruit and vegetables',
         'url': 'https://www.argentina.gob.ar/agricultura/mas-frutas-y-verduras/recomendaciones/las-frutas-y-verduras-de-estacion-son-las-mas-sabrosas-y-nutritivas',
         'region': 'Argentina; national produce supply, not Buenos Aires cultivation',
         'precision': 'Seasonal; editorial month bins, not exact availability dates',
         'note': 'Autumn-winter = March-August; spring = September-November; summer = December-February. Season membership is not exhaustive retail availability. National origins may supply Buenos Aires; no claim of local production.',
     },
     'city-autumn': {
-        'title': 'Buenos Aires Ciudad: Huerta de otoño (17 March 2025)',
+        'title': 'Buenos Aires City: Autumn garden (17 March 2025)',
         'url': 'https://buenosaires.gob.ar/gcaba_historico/noticias/huerta-de-otono-consejos-y-recomendaciones-para-cultivar-productos-de',
         'region': 'Buenos Aires City; applicable reference for Belgrano',
         'precision': 'Autumn only; editorial March-May bins',
-        'note': 'The article explicitly says sembrar but does not assign propagation methods or exact months. Conditions of soil and light qualify the recommendation. Broad coles is not assigned to specific brassicas.',
+        'note': 'The article explicitly recommends sowing but does not assign propagation methods or exact months. Conditions of soil and light qualify the recommendation. Its broad cabbage-family category is not assigned to specific brassicas.',
     },
     'gba-all-year': {
-        'title': 'Buenos Aires Province: Cuaderno de huerta, Nivel Primario, page 6',
+        'title': 'Buenos Aires Province: Primary-level garden workbook, page 6',
         'url': 'https://www.ambiente.gba.gob.ar/pdfs/008_CUADERNO%20DE%20HUERTA%20PRIMARIA_ABR24.pdf',
         'region': 'Buenos Aires Province; broad regional guidance, not a Belgrano site assessment',
         'precision': 'Explicit all-year planting statement',
-        'note': 'PARA PLANTAR TODO EL AÑO lists acelga, zanahoria, rúcula and rabanitos. Method is not distinguished. Graphical seasonal calendar was not transcribed from text extraction.',
+        'note': 'The all-year planting section lists Swiss chard, carrot, arugula and radish. Method is not distinguished. The graphical seasonal calendar was not transcribed from text extraction.',
     },
     'inta-calendar': {
-        'title': 'INTA: Calendario de siembra, spring-summer and autumn-winter tables',
+        'title': 'INTA: Planting calendar, spring-summer and autumn-winter tables',
         'url': 'https://www.argentina.gob.ar/sites/default/files/2023/08/script-tmp-inta_-calendario_de_siembra.pdf',
-        'region': 'Argentina; PDF references INTA /bn but does not explicitly identify a geographic coverage area',
+        'region': 'Argentina; the PDF references INTA but does not explicitly identify a geographic coverage area',
         'precision': 'Printed month ranges, not exact dates',
-        'note': 'General INTA reference, not a verified Belgrano-specific calendar. Region and cultivar uncertainty apply. Almácigo maps to seedStart except batata, whose nursery material is unspecified and therefore omitted. Ambiguous punctuation-only ranges are omitted.',
+        'note': 'General INTA reference, not a verified Belgrano-specific calendar. Region and cultivar uncertainty apply. Seedbed or nursery entries map to seedStart except sweet potato, whose nursery material is unspecified and therefore omitted. Ambiguous punctuation-only ranges are omitted.',
     },
 }
 
@@ -169,39 +169,39 @@ ALL_YEAR = 'chard carrot arugula radish'.split()
 
 # INTA pp. 1-2: only unambiguous explicitly dated method rows.
 # Separate tuples preserve separate windows rather than filling intervening months.
-INTA_ROWS: list[tuple[str, Literal['seedStart', 'directSow', 'transplant', 'sow'], list[int], str]] = [
- ('basil', 'seedStart', [8, 9], 'Albahaca: almácigo Ago-Set.'),
- ('basil', 'transplant', [10, 11], 'Albahaca: transplante Oct-Nov.'),
- ('sweet-potato', 'transplant', [10], 'Batata: transplante Oct.; nursery propagation not classified as seed starting.'),
- ('eggplant', 'seedStart', [8, 9], 'Berenjena: almácigo Ago-Set.'),
- ('eggplant', 'transplant', [10, 11], 'Berenjena: transplante Oct-Nov.'),
- ('winter-squash', 'directSow', [10, 11], 'Calabaza and zapallo: directa Oct-Nov.'),
- ('sweet-corn', 'directSow', [10, 11, 12], 'Maíz dulce: directa Oct-Dic.'),
- ('melon', 'directSow', [10], 'Melón: directa Oct.'),
- ('cucumber', 'directSow', [10], 'Pepino: directa Oct.'),
- ('pepper', 'seedStart', [7, 8], 'Pimiento: almácigo Jul-Ago.'),
- ('pepper', 'transplant', [10], 'Pimiento: transplante Oct.'),
- ('green-bean', 'directSow', [10, 11, 12, 1], 'Poroto chaucha: directa Oct-Ene.; window crosses the year boundary.'),
- ('tomato', 'seedStart', [9, 10], 'Tomate: almácigo Sep-Oct.'),
- ('tomato', 'transplant', [10, 11], 'Tomate: transplante Oct-Nov.'),
- ('summer-squash', 'directSow', [10, 11, 12, 1], 'Zapallito: directa Oct-Ene.; window crosses the year boundary.'),
- ('parsley', 'directSow', [9], 'Perejil: directa a chorrillo Setiembre.'),
- ('garlic', 'directSow', [3, 4], 'Ajo: directa Mar-Abr.; planting cloves, not seed starting.'),
- ('peas', 'directSow', [6, 7, 8], 'Arveja: directa Jun-Ago.; City separately supports unspecified autumn sowing.'),
- ('broccoli', 'seedStart', [2, 3], 'Brócoli: almácigo Feb-Mar.'),
- ('broccoli', 'transplant', [3, 4], 'Brócoli: transplante Mar-Abr.'),
- ('onion', 'seedStart', [3, 4], 'Cebolla bulbo: almácigo Mar-Abr.; no dated transplant row.'),
- ('onion', 'directSow', [4], 'Cebolla bulbo: directa Abr.'),
- ('scallion', 'seedStart', [2, 3, 4, 5, 6], 'Cebolla de verdeo: almácigo Feb-Jun.'),
- ('scallion', 'directSow', [3, 4, 5], 'Cebolla de verdeo: directa Mar-May.'),
- ('cauliflower', 'seedStart', [2, 3], 'Coliflor: almácigo Feb-Mar.'),
- ('cauliflower', 'transplant', [3, 4], 'Coliflor: transplante Mar-Abr.'),
- ('escarole', 'directSow', [2, 3], 'Escarola: directa Feb-Mar.'),
- ('chicory', 'directSow', [2, 3, 4, 5], 'Radicheta o Achicoria: directa a chorrillo Feb-May.; autumn-winter table.'),
- ('celery', 'seedStart', [9, 10, 11], 'Apio: almácigo Sept-Nov.; spring varieties Platense and Golden Boy, page 1.'),
- ('celery', 'transplant', [12, 1, 2, 3], 'Apio: transplante Dic-Mar.; spring varieties Platense and Golden Boy, page 1.'),
- ('celery', 'seedStart', [3], 'Apio: almácigo Marzo; autumn varieties Verde de Cortar and De Verdeo, page 1.'),
- ('celery', 'transplant', [5], 'Apio: transplante Mayo; autumn varieties Verde de Cortar and De Verdeo, page 1.'),
+INTA_ROWS: list[tuple[str, Literal['seedStart', 'directSow', 'transplant', 'sow'], list[int], str, str]] = [
+ ('basil', 'seedStart', [8, 9], 'Albahaca: almácigo Ago-Set.', 'Basil: seedbed Aug-Sep.'),
+ ('basil', 'transplant', [10, 11], 'Albahaca: transplante Oct-Nov.', 'Basil: transplant Oct-Nov.'),
+ ('sweet-potato', 'transplant', [10], 'Batata: transplante Oct.', 'Sweet potato: transplant Oct.; nursery propagation not classified as seed starting.'),
+ ('eggplant', 'seedStart', [8, 9], 'Berenjena: almácigo Ago-Set.', 'Eggplant: seedbed Aug-Sep.'),
+ ('eggplant', 'transplant', [10, 11], 'Berenjena: transplante Oct-Nov.', 'Eggplant: transplant Oct-Nov.'),
+ ('winter-squash', 'directSow', [10, 11], 'Calabaza y zapallo: directa Oct-Nov.', 'Winter squash: direct sowing Oct-Nov.'),
+ ('sweet-corn', 'directSow', [10, 11, 12], 'Maíz dulce: directa Oct-Dic.', 'Sweet corn: direct sowing Oct-Dec.'),
+ ('melon', 'directSow', [10], 'Melón: directa Oct.', 'Melon: direct sowing Oct.'),
+ ('cucumber', 'directSow', [10], 'Pepino: directa Oct.', 'Cucumber: direct sowing Oct.'),
+ ('pepper', 'seedStart', [7, 8], 'Pimiento: almácigo Jul-Ago.', 'Bell pepper: seedbed Jul-Aug.'),
+ ('pepper', 'transplant', [10], 'Pimiento: transplante Oct.', 'Bell pepper: transplant Oct.'),
+ ('green-bean', 'directSow', [10, 11, 12, 1], 'Poroto chaucha: directa Oct-Ene.', 'Green bean: direct sowing Oct-Jan; window crosses the year boundary.'),
+ ('tomato', 'seedStart', [9, 10], 'Tomate: almácigo Sep-Oct.', 'Tomato: seedbed Sep-Oct.'),
+ ('tomato', 'transplant', [10, 11], 'Tomate: transplante Oct-Nov.', 'Tomato: transplant Oct-Nov.'),
+ ('summer-squash', 'directSow', [10, 11, 12, 1], 'Zapallito: directa Oct-Ene.', 'Summer squash: direct sowing Oct-Jan; window crosses the year boundary.'),
+ ('parsley', 'directSow', [9], 'Perejil: directa a chorrillo Setiembre.', 'Parsley: direct sowing in rows Sep.'),
+ ('garlic', 'directSow', [3, 4], 'Ajo: directa Mar-Abr.', 'Garlic: direct planting Mar-Apr; planting cloves, not seed starting.'),
+ ('peas', 'directSow', [6, 7, 8], 'Arveja: directa Jun-Ago.', 'Peas: direct sowing Jun-Aug; the City source separately supports unspecified autumn sowing.'),
+ ('broccoli', 'seedStart', [2, 3], 'Brócoli: almácigo Feb-Mar.', 'Broccoli: seedbed Feb-Mar.'),
+ ('broccoli', 'transplant', [3, 4], 'Brócoli: transplante Mar-Abr.', 'Broccoli: transplant Mar-Apr.'),
+ ('onion', 'seedStart', [3, 4], 'Cebolla bulbo: almácigo Mar-Abr.', 'Bulb onion: seedbed Mar-Apr; no dated transplant row.'),
+ ('onion', 'directSow', [4], 'Cebolla bulbo: directa Abr.', 'Bulb onion: direct sowing Apr.'),
+ ('scallion', 'seedStart', [2, 3, 4, 5, 6], 'Cebolla de verdeo: almácigo Feb-Jun.', 'Scallion: seedbed Feb-Jun.'),
+ ('scallion', 'directSow', [3, 4, 5], 'Cebolla de verdeo: directa Mar-May.', 'Scallion: direct sowing Mar-May.'),
+ ('cauliflower', 'seedStart', [2, 3], 'Coliflor: almácigo Feb-Mar.', 'Cauliflower: seedbed Feb-Mar.'),
+ ('cauliflower', 'transplant', [3, 4], 'Coliflor: transplante Mar-Abr.', 'Cauliflower: transplant Mar-Apr.'),
+ ('escarole', 'directSow', [2, 3], 'Escarola: directa Feb-Mar.', 'Escarole: direct sowing Feb-Mar.'),
+ ('chicory', 'directSow', [2, 3, 4, 5], 'Radicheta o Achicoria: directa a chorrillo Feb-May.', 'Chicory: direct sowing in rows Feb-May; autumn-winter table.'),
+ ('celery', 'seedStart', [9, 10, 11], 'Apio: almácigo Sept-Nov.; variedades de primavera Platense y Golden Boy, página 1.', 'Celery: seedbed Sep-Nov for the spring cultivars Platense and Golden Boy, page 1.'),
+ ('celery', 'transplant', [12, 1, 2, 3], 'Apio: transplante Dic-Mar.; variedades de primavera Platense y Golden Boy, página 1.', 'Celery: transplant Dec-Mar for the spring cultivars Platense and Golden Boy, page 1.'),
+ ('celery', 'seedStart', [3], 'Apio: almácigo Marzo; variedades de otoño Verde de Cortar y De Verdeo, página 1.', 'Celery: seedbed Mar for the autumn cultivars Verde de Cortar and De Verdeo, page 1.'),
+ ('celery', 'transplant', [5], 'Apio: transplante Mayo; variedades de otoño Verde de Cortar y De Verdeo, página 1.', 'Celery: transplant May for the autumn cultivars Verde de Cortar and De Verdeo, page 1.'),
 ]
 
 def build_catalog() -> Catalog:
@@ -236,7 +236,7 @@ def build_catalog() -> Catalog:
             plant(key, 'sow', [3, 4, 5], 'city-autumn', 'Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting.')
     for key in ALL_YEAR:
         plant(key, 'sow', list(range(1, 13)), 'gba-all-year', 'Explicit all-year planting guidance; propagation method unspecified. Not an assertion that every cultivar suits every month.')
-    for key, action, months, note in INTA_ROWS:
+    for key, action, months, _source_text, note in INTA_ROWS:
         plant(key, action, months, 'inta-calendar', note + ' INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.')
     result: Catalog = {'sources': SOURCES, 'crops': sorted(crops.values(), key=lambda crop: crop['name'])}
     validate_catalog(result)

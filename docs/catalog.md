@@ -19,18 +19,18 @@ window.CROPS = [{
     note: 'Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.'},
   plant: [
     {action: 'seedStart', months: [9, 10], sources: ['inta-calendar'],
-      note: 'Tomate: almácigo Sep-Oct. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.'},
+      note: 'Tomato: seedbed Sep-Oct. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.'},
     {action: 'transplant', months: [10, 11], sources: ['inta-calendar'],
-      note: 'Tomate: transplante Oct-Nov. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.'}
+      note: 'Tomato: transplant Oct-Nov. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.'}
   ]
 }];
 window.SOURCES = {
   'inta-calendar': {
-    title: 'INTA: Calendario de siembra, spring-summer and autumn-winter tables',
+    title: 'INTA: Planting calendar, spring-summer and autumn-winter tables',
     url: 'https://www.argentina.gob.ar/sites/default/files/2023/08/script-tmp-inta_-calendario_de_siembra.pdf',
-    region: 'Argentina; PDF references INTA /bn but does not explicitly identify a geographic coverage area',
+    region: 'Argentina; the PDF references INTA but does not explicitly identify a geographic coverage area',
     precision: 'Printed month ranges, not exact dates',
-    note: 'General INTA reference, not a verified Belgrano-specific calendar. Region and cultivar uncertainty apply. Almácigo maps to seedStart except batata, whose nursery material is unspecified and therefore omitted. Ambiguous punctuation-only ranges are omitted.'
+    note: 'General INTA reference, not a verified Belgrano-specific calendar. Region and cultivar uncertainty apply. Seedbed or nursery entries map to seedStart except sweet potato, whose nursery material is unspecified and therefore omitted. Ambiguous punctuation-only ranges are omitted.'
   }
 };
 ```
@@ -80,7 +80,7 @@ seed starting Feb-Mar, transplant Mar-Apr; bulb onion seed starting Mar-Apr,
 direct Apr; scallion seed starting Feb-Jun, direct Mar-May; parsley direct
 September; escarole direct Feb-Mar; chicory direct Feb-May; celery seed starting Sep-Nov and Mar,
 transplant Dec-Mar and May (variety-specific). The generator includes the
-original Spanish row cue in each note.
+original Spanish row cue in the generator while the browser-facing note is English.
 
 ## Conflicts and conservative decisions
 

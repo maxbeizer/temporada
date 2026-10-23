@@ -26,6 +26,8 @@ The relative manifest, service worker, and asset paths support both domain-root 
 
 The legacy `app.js`, `style.css`, and `data/produce.js` are frozen compatibility assets for installations still controlled by the original worker. Do not change or remove them: its stale-while-revalidate cache can refresh files independently, even when an installation skips intermediate releases. The rebuilt HTML uses separate `app-v2.js`, `style-v2.css`, and `data/crops-v2.js` paths so old HTML always receives compatible legacy assets.
 
+The rebuilt HTML also carries an inline migration fallback. If the original worker serves rebuilt HTML while the v2 dependencies are unavailable, the page renders the legacy shell from those frozen cached assets instead of failing offline. Keep the fallback markup synchronized with the frozen legacy app contract until the original worker no longer needs migration support.
+
 The service worker precaches the complete local shell and catalog as one versioned release. New workers wait until old controlled tabs close; close all Temporada tabs/windows and reopen to receive a waiting update. Do not force activation into open pages. Bump `CACHE` in `sw.js` whenever any cached asset changes; keep `SHELL` synchronized with local runtime assets. Old Temporada caches are removed on activation; unrelated caches are preserved. External source pages are not cached. Offline use requires one successful online visit first.
 
 On iOS Safari, install through Share > Add to Home Screen; Chromium-based mobile browsers expose installation through their own menu or prompt. Install UI and standalone behavior vary by platform and require real-device verification; desktop emulation is not a substitute.

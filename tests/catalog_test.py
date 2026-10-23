@@ -1,6 +1,7 @@
 import copy
 import importlib.util
 import pathlib
+import re
 import subprocess
 import unittest
 
@@ -114,6 +115,17 @@ class CatalogTests(unittest.TestCase):
                 catalog['sources']['national-buy']['url'] = value
                 with self.assertRaises(ValueError):
                     build_data.validate_catalog(catalog)
+
+    def test_browser_facing_evidence_is_english(self):
+        text = ' '.join(
+            [value for source in self.catalog['sources'].values() for key, value in source.items() if key != 'url']
+            + [window['note'] for crop in self.catalog['crops'] for window in (([crop['buy']] if crop['buy'] else []) + (crop['plant'] or []))]
+        )
+        self.assertIsNone(re.search(
+            r'\b(?:almácigo|transplante|directa|siembra|sembrar|otoño|huerta|frutas|verduras|zapallo|hinojo|manzana|pera|acelga|zanahoria|rúcula|rabanitos|perejil|apio|berenjena|tomate|pepino|melón|pimiento|cebolla|coliflor|escarola)\b',
+            text,
+            re.IGNORECASE,
+        ))
 
 
 if __name__ == '__main__':
