@@ -43,6 +43,26 @@
   const loaded = Array.isArray(window.CROPS) && window.SOURCES && typeof window.SOURCES === 'object';
   const crops = loaded ? window.CROPS : [];
   const sources = new Map(loaded ? Object.entries(window.SOURCES) : []);
+  const navigation = performance.getEntriesByType('navigation')[0];
+  const pendingReturn = history.state?.temporadaReturn;
+  const savedReturn = navigation?.type === 'back_forward' ? pendingReturn : null;
+  const returnContext = savedReturn && views.includes(savedReturn.view) &&
+    Number.isInteger(savedReturn.month) && savedReturn.month >= 1 && savedReturn.month <= 12 &&
+    typeof savedReturn.q === 'string' && typeof savedReturn.cropId === 'string' &&
+    Number.isInteger(savedReturn.sourceIndex) && savedReturn.sourceIndex >= 0 &&
+    crops.some(crop => crop.id === savedReturn.cropId) ? savedReturn : null;
+  if (returnContext) {
+    state.view = returnContext.view;
+    state.month = returnContext.month;
+    state.q = returnContext.q;
+  }
+  function clearReturnContext() {
+    if (!history.state?.temporadaReturn) return;
+    const nextHistoryState = { ...history.state };
+    delete nextHistoryState.temporadaReturn;
+    history.replaceState(nextHistoryState, '');
+  }
+  if (pendingReturn && !returnContext) clearReturnContext();
   const escape = value => String(value ?? '').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
   const norm = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   function entries(crop) {
@@ -69,7 +89,7 @@
       const months = entry.months.map(month => T.months[month - 1]).join(', ');
       return `<section class="schedule"><h5>${escape(action)}</h5><p>${escape(T.activeMonths(months))}</p>${entry.note ? `<p>${escape(entry.note)}</p>` : ''}<h6>${T.sources}</h6>${sourceMarkup(entry.sources)}</section>`;
     }).join('') : `<p>${T.noSchedule}</p>`;
-    return `<li class="crop-card"><article><h3><span class="emoji" aria-hidden="true">${escape(crop.emoji)}</span>${escape(crop.name)}</h3><p class="status${active.length ? ' active' : ''}">${escape(status)}</p><details><summary>${T.details}<span class="vh">: ${escape(crop.name)}</span></summary><h4>${T.annual}</h4>${annual}</details></article></li>`;
+    return `<li class="crop-card" data-crop-id="${escape(crop.id)}"><article><h3><span class="emoji" aria-hidden="true">${escape(crop.emoji)}</span>${escape(crop.name)}</h3><p class="status${active.length ? ' active' : ''}">${escape(status)}</p><details><summary>${T.details}<span class="vh">: ${escape(crop.name)}</span></summary><h4>${T.annual}</h4>${annual}</details></article></li>`;
   }
   function renderPreferences() {
     if (state.theme === 'system') delete document.documentElement.dataset.theme;
@@ -120,7 +140,19 @@
   let returnFocus = null;
   $('cards').addEventListener('click', event => {
     const link = event.target.closest('a');
-    if (link) returnFocus = link;
+    const cardElement = link?.closest('.crop-card');
+    if (!link || !cardElement) return;
+    returnFocus = link;
+    history.replaceState({
+      ...history.state,
+      temporadaReturn: {
+        view: state.view,
+        month: state.month,
+        q: state.q,
+        cropId: cardElement.dataset.cropId,
+        sourceIndex: [...cardElement.querySelectorAll('a')].indexOf(link),
+      },
+    }, '');
   });
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') refreshCurrentMonth();
@@ -129,6 +161,15 @@
     refreshCurrentMonth();
     if (event.persisted && returnFocus?.isConnected) returnFocus.focus();
     returnFocus = null;
+    clearReturnContext();
   });
+  if (returnContext) $('q').value = state.q;
   render();
+  if (returnContext) {
+    const cardElement = document.querySelector(`.crop-card[data-crop-id="${returnContext.cropId}"]`);
+    const details = cardElement?.querySelector('details');
+    if (details) details.open = true;
+    cardElement?.querySelectorAll('a')[returnContext.sourceIndex]?.focus();
+    clearReturnContext();
+  }
 })();

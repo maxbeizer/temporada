@@ -10,7 +10,7 @@ const fixture = { sources: [{ id: 'fixture', title: 'Test source', url: 'https:/
   { id: 'b', name: 'Beta', emoji: '🌱', category: 'herb', buy: null, plant: null },
 ] };
 
-function boot({ stored = {}, unavailable = false, date = '2026-04-01T01:00:00Z', catalog = fixture } = {}) {
+function boot({ stored = {}, unavailable = false, date = '2026-04-01T01:00:00Z', catalog = fixture, navigationType = 'navigate', historyState = null, returnCard = null } = {}) {
   const elements = new Map();
   function element(id) {
     if (!elements.has(id)) elements.set(id, { textContent: '', innerHTML: '', hidden: false, dataset: {}, value: '', listeners: {}, attributes: {}, setAttribute(k, v) { this.attributes[k] = String(v); }, addEventListener(k, fn) { this.listeners[k] = fn; }, focus() {}, showModal() { this.open = true; }, close() { this.open = false; } });
@@ -20,7 +20,8 @@ function boot({ stored = {}, unavailable = false, date = '2026-04-01T01:00:00Z',
   const documentListeners = {};
   const windowListeners = {};
   class Clock extends Date { constructor(...args) { super(...(args.length ? args : [date])); } }
-  const context = { window: { CROPS: catalog?.crops, SOURCES: catalog ? Object.fromEntries(catalog.sources.map(source => [source.id, source])) : undefined, addEventListener() {} }, document: { documentElement: { dataset: {} }, getElementById: element, querySelectorAll: () => [], addEventListener() {} }, localStorage: { getItem(k) { if (unavailable) throw Error('blocked'); return storage.get(k) ?? null; }, setItem(k, v) { if (unavailable) throw Error('blocked'); storage.set(k, v); } }, Date: Clock, Intl, console, setTimeout, URL };
+  const history = { state: historyState, replaceState(value) { this.state = value; } };
+  const context = { window: { CROPS: catalog?.crops, SOURCES: catalog ? Object.fromEntries(catalog.sources.map(source => [source.id, source])) : undefined, addEventListener() {} }, document: { documentElement: { dataset: {} }, getElementById: element, querySelectorAll: () => [], querySelector: () => returnCard, addEventListener() {} }, localStorage: { getItem(k) { if (unavailable) throw Error('blocked'); return storage.get(k) ?? null; }, setItem(k, v) { if (unavailable) throw Error('blocked'); storage.set(k, v); } }, history, performance: { getEntriesByType: name => name === 'navigation' ? [{ type: navigationType }] : [] }, Date: Clock, Intl, console, setTimeout, URL };
   context.document.addEventListener = (name, listener) => { documentListeners[name] = listener; };
   context.window.addEventListener = (name, listener) => { windowListeners[name] = listener; };
   context.document.listeners = documentListeners;
@@ -131,10 +132,37 @@ test('resuming preserves browsed month, search and card DOM', () => {
 test('back-forward restoration returns focus to the source link', () => {
   const ui = boot();
   let focused = false;
-  const sourceLink = { isConnected: true, focus() { focused = true; } };
+  const cardElement = { dataset: { cropId: 'a' }, querySelectorAll: () => [sourceLink] };
+  const sourceLink = { isConnected: true, closest: selector => selector === '.crop-card' ? cardElement : null, focus() { focused = true; } };
   ui.element('cards').listeners.click({ target: { closest: selector => selector === 'a' ? sourceLink : null } });
+  assert.equal(ui.context.history.state.temporadaReturn.cropId, 'a');
   ui.context.window.listeners.pageshow({ persisted: true });
   assert.equal(focused, true);
+  assert.equal(ui.context.history.state.temporadaReturn, undefined);
+});
+
+test('uncached history return restores browsing context and source focus', () => {
+  let focused = false;
+  const details = { open: false };
+  const sourceLink = { focus() { focused = true; } };
+  const returnCard = { querySelector: selector => selector === 'details' ? details : null, querySelectorAll: () => [sourceLink] };
+  const historyState = { temporadaReturn: { view: 'plant', month: 4, q: 'alpha', cropId: 'a', sourceIndex: 0 } };
+  const ui = boot({ navigationType: 'back_forward', historyState, returnCard });
+  assert.equal(ui.element('month-name').textContent, 'April');
+  assert.equal(ui.element('q').value, 'alpha');
+  assert.match(ui.element('cards').innerHTML, /Alpha/);
+  assert.equal(details.open, true);
+  assert.equal(focused, true);
+  assert.equal(ui.context.history.state.temporadaReturn, undefined);
+});
+
+test('new visits ignore stale return context', () => {
+  const historyState = { temporadaReturn: { view: 'buy', month: 4, q: 'beta', cropId: 'b', sourceIndex: 0 } };
+  const ui = boot({ navigationType: 'navigate', historyState });
+  assert.equal(ui.element('month-name').textContent, 'March');
+  assert.equal(ui.element('q').value, '');
+  assert.match(ui.element('count').textContent, /^Plant:/);
+  assert.equal(ui.context.history.state.temporadaReturn, undefined);
 });
 
 test('first visit uses Plant and the Buenos Aires month, not UTC', () => {

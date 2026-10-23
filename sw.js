@@ -1,4 +1,4 @@
-const CACHE = "temporada-v5";
+const CACHE = "temporada-v6";
 const SHELL = ["./", "index.html", "style-v2.css", "app-v2.js", "data/crops-v2.js", "manifest.webmanifest", "icons/icon.svg", "icons/icon-192.png", "icons/icon-512.png", "icons/icon-maskable-512.png"];
 const shellURLs = new Set(SHELL.map(path => new URL(path, self.registration.scope).href));
 
