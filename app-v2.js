@@ -1,8 +1,8 @@
 (() => {
   const T = {
     months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-    plant: 'Plant', buy: 'Buy', location: 'Belgrano, Buenos Aires', skip: 'Skip to crops',
-    view: 'Crop view', search: 'Search crops', previous: 'Previous month', next: 'Next month', current: 'Current month',
+    plant: 'Plant', buy: 'Buy', subtitle: "What's in season", skip: 'Skip to crops',
+    view: 'Crop view', month: 'Month', search: 'Search crops', previous: 'Previous month', next: 'Next month', current: 'This month',
     theme: 'Theme', system: 'System', light: 'Light', dark: 'Dark',
     seedStart: 'Start seeds', directSow: 'Sow directly', transplant: 'Transplant', sow: 'Sow (method unspecified)',
     unknown: 'Schedule unknown', inactive: 'No listed activity this month', available: 'In season to buy',
@@ -16,7 +16,6 @@
     dataError: 'The crop catalog could not be loaded. Please reload or try again when online.',
     empty: 'No crops match your search.', noOpportunities: 'No researched opportunities are listed for this month. Search for a crop to see its annual schedule or data gaps.', timing: 'Monthly guidance, not a guarantee. Local conditions can shift timing.',
     count: (n, total, view, month) => `${view}: ${n} of ${total} crops for ${month}.`,
-    currentLabel: month => `${month} (current Buenos Aires month)`,
     activeMonths: months => `Months: ${months}.`,
   };
   const $ = id => document.getElementById(id);
@@ -104,7 +103,6 @@
     document.querySelectorAll('#view button').forEach(button => button.setAttribute('aria-pressed', button.dataset.view === state.view));
     document.querySelectorAll('#theme button').forEach(button => button.setAttribute('aria-pressed', button.dataset.theme === state.theme));
     $('month-name').textContent = T.months[state.month - 1];
-    $('month-note').textContent = state.month === currentMonth() ? T.currentLabel(T.months[state.month - 1]) : '';
     const query = norm(state.q.trim());
     const rows = crops.filter(crop => {
       if (!norm(crop.name).includes(query)) return false;
@@ -117,7 +115,10 @@
     $('data-error').textContent = loaded ? '' : T.dataError;
     $('preference-status').textContent = [...notices].join(' ');
   }
-  for (const [id, key] of Object.entries({ 'skip': 'skip', 'location': 'location', 'search-label': 'search', 'previous': 'previous', 'next': 'next', 'current': 'current', 'plant': 'plant', 'buy': 'buy', 'theme-label': 'theme', 'system': 'system', 'light': 'light', 'dark': 'dark', 'timing': 'timing' })) $(id).textContent = T[key];
+  for (const [id, key] of Object.entries({ 'skip': 'skip', 'subtitle': 'subtitle', 'search-label': 'search', 'current': 'current', 'plant': 'plant', 'buy': 'buy', 'theme-label': 'theme', 'system': 'system', 'light': 'light', 'dark': 'dark', 'timing': 'timing' })) $(id).textContent = T[key];
+  $('previous').setAttribute('aria-label', T.previous);
+  $('next').setAttribute('aria-label', T.next);
+  $('month-stepper').setAttribute('aria-label', T.month);
   $('view').setAttribute('aria-label', T.view);
   $('theme').setAttribute('aria-label', T.theme);
   $('view').addEventListener('click', event => {
@@ -134,9 +135,6 @@
   $('previous').addEventListener('click', () => { state.month = (state.month + 10) % 12 + 1; render(); });
   $('next').addEventListener('click', () => { state.month = state.month % 12 + 1; render(); });
   $('current').addEventListener('click', () => { state.month = currentMonth(); render(); });
-  function refreshCurrentMonth() {
-    $('month-note').textContent = state.month === currentMonth() ? T.currentLabel(T.months[state.month - 1]) : '';
-  }
   let returnFocus = null;
   $('cards').addEventListener('click', event => {
     const link = event.target.closest('a');
@@ -154,11 +152,7 @@
       },
     }, '');
   });
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') refreshCurrentMonth();
-  });
   window.addEventListener('pageshow', event => {
-    refreshCurrentMonth();
     if (event.persisted && returnFocus?.isConnected) returnFocus.focus();
     returnFocus = null;
     clearReturnContext();

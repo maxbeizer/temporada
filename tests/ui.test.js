@@ -79,6 +79,15 @@ test('monthly browsing shows opportunities; search includes inactive and unknown
   assert.equal(ui.element('month-name').textContent, 'February');
 });
 
+test('month arrow buttons use accessible names without verbose visible labels', () => {
+  const ui = boot();
+  assert.equal(ui.element('previous').attributes['aria-label'], 'Previous month');
+  assert.equal(ui.element('next').attributes['aria-label'], 'Next month');
+  assert.equal(ui.element('previous').textContent, '');
+  assert.equal(ui.element('next').textContent, '');
+  assert.equal(ui.element('current').textContent, 'This month');
+});
+
 test('annual details include source uncertainty and notes', () => {
   const ui = boot();
   const markup = ui.element('cards').innerHTML;
@@ -121,8 +130,6 @@ test('resuming preserves browsed month, search and card DOM', () => {
   let replacements = 0;
   const markup = cards.innerHTML;
   Object.defineProperty(cards, 'innerHTML', { get: () => markup, set() { replacements++; } });
-  ui.context.document.visibilityState = 'visible';
-  ui.context.document.listeners.visibilitychange();
   ui.context.window.listeners.pageshow({ persisted: true });
   assert.equal(ui.element('month-name').textContent, 'April');
   assert.equal(replacements, 0);

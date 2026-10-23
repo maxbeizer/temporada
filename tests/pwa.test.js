@@ -18,3 +18,13 @@ test('rebuilt HTML can fall back to the frozen legacy shell', () => {
   assert.match(html, /app\.src='app-v2\.js';app\.onerror=legacyFallback/);
   assert.match(html, /load\('data\/produce\.js',\(\)=>load\('app\.js'\)\)/);
 });
+
+test('rebuilt header uses a purpose subtitle instead of a neighborhood label', () => {
+  assert.match(html, /<header><h1>Temporada<\/h1><p id="subtitle"><\/p><\/header>/);
+  assert.doesNotMatch(html, /id="location"/);
+});
+
+test('month navigation is one compact stepper with a separate current-month shortcut', () => {
+  assert.match(html, /<div class="month-stepper"[^>]*>[\s\S]*id="previous"[\s\S]*id="month-name"[\s\S]*id="next"[\s\S]*<\/div>[\s\S]*id="current"/);
+  assert.doesNotMatch(html, /id="month-note"/);
+});

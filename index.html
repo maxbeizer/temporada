@@ -37,19 +37,20 @@
 </head>
 <body>
 <a class="skip" href="#crops" id="skip"></a>
-<header><h1>Temporada</h1><p id="location"></p></header>
+<header><h1>Temporada</h1><p id="subtitle"></p></header>
 <main>
   <div class="seg view" role="group" id="view">
     <button id="plant" type="button" data-view="plant" aria-pressed="true"></button>
     <button id="buy" type="button" data-view="buy" aria-pressed="false"></button>
   </div>
   <div class="month-controls">
-    <button id="previous" type="button"></button>
-    <h2 id="month-name"></h2>
-    <button id="next" type="button"></button>
+    <div class="month-stepper" id="month-stepper" role="group">
+      <button id="previous" type="button"><span aria-hidden="true">‹</span></button>
+      <h2 id="month-name"></h2>
+      <button id="next" type="button"><span aria-hidden="true">›</span></button>
+    </div>
     <button id="current" type="button"></button>
   </div>
-  <p id="month-note" class="muted"></p>
   <label for="q" id="search-label"></label>
   <input id="q" type="search" autocomplete="off">
   <p id="preference-status" role="status"></p>
