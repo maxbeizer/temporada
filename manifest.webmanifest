@@ -1,7 +1,9 @@
 {
-  "name": "Temporada — frutas y verduras de estación",
+  "name": "Temporada — Plant and Buy",
   "short_name": "Temporada",
-  "description": "Seasonal produce calendar for Argentina",
+  "description": "Monthly planting options and seasonal produce for Buenos Aires",
+  "lang": "en",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

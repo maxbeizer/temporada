@@ -1,11 +1,10 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Temporada — frutas y verduras de estación en Argentina</title>
-<meta name="description" content="Qué frutas y verduras están de temporada en Argentina, mes a mes. / What produce is in season in Argentina, month by month.">
-<script>try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<title>Temporada — Plant and buy in Buenos Aires</title>
+<meta name="description" content="Monthly crop planting and seasonal buying guidance for Belgrano, Buenos Aires.">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#3f8f4f">
 <meta name="mobile-web-app-capable" content="yes">
@@ -13,55 +12,86 @@
 <meta name="apple-mobile-web-app-title" content="Temporada">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css">
+<script>
+(function(){
+  let started=false;
+  function load(src,next){const script=document.createElement('script');script.src=src;script.onload=next||null;document.body.append(script)}
+  function start(){
+    if(started)return;
+    const shell=document.getElementById('legacy-shell');
+    if(!shell)return;
+    started=true;
+    document.querySelector('link[href="style-v2.css"]')?.remove();
+    document.body.replaceChildren(shell.content.cloneNode(true));
+    const style=document.createElement('link');style.rel='stylesheet';style.href='style.css';document.head.append(style);
+    load('data/produce.js',()=>load('app.js'));
+  }
+  window.legacyFallback=function(){
+    window.legacyMode=true;
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});
+    else start();
+  };
+})();
+</script>
+<link rel="stylesheet" href="style-v2.css" onerror="legacyFallback()">
 </head>
 <body>
-<a class="skip" href="#grid-wrap" id="skiplbl">Skip to table</a>
-<header>
-  <div class="bar">
-    <h1>Temporada</h1>
-    <button id="settingsbtn" type="button" aria-haspopup="dialog"><span aria-hidden="true">⚙ </span><span id="settingslbl"></span></button>
-  </div>
-</header>
+<a class="skip" href="#crops" id="skip"></a>
+<header><h1>Temporada</h1><p id="location"></p></header>
 <main>
-<section class="controls" id="filters" aria-label="Filtros">
+  <div class="seg view" role="group" id="view">
+    <button id="plant" type="button" data-view="plant" aria-pressed="true"></button>
+    <button id="buy" type="button" data-view="buy" aria-pressed="false"></button>
+  </div>
+  <div class="month-controls">
+    <button id="previous" type="button"></button>
+    <h2 id="month-name"></h2>
+    <button id="next" type="button"></button>
+    <button id="current" type="button"></button>
+  </div>
+  <p id="month-note" class="muted"></p>
+  <label for="q" id="search-label"></label>
   <input id="q" type="search" autocomplete="off">
-</section>
-<p id="count" aria-live="polite"></p>
-<div class="wrap" id="grid-wrap" role="region" tabindex="0">
-  <table id="grid"></table>
-</div>
+  <p id="preference-status" role="status"></p>
+  <p id="data-error" role="alert"></p>
+  <section id="crops" tabindex="-1" aria-labelledby="count">
+    <h2 id="count" aria-live="polite" aria-atomic="true"></h2>
+    <p id="empty"></p>
+    <ul id="cards" class="cards" role="list"></ul>
+  </section>
+  <p id="timing" class="muted"></p>
 </main>
-<dialog id="settings" aria-labelledby="settingsttl">
-  <h2 id="settingsttl"></h2>
-  <div class="field"><span id="typelbl" class="flbl"></span>
-    <div class="seg" role="group" id="type">
-      <button type="button" data-v="all" aria-pressed="true"></button>
-      <button type="button" data-v="veg" aria-pressed="false"></button>
-      <button type="button" data-v="fruit" aria-pressed="false"></button>
-    </div>
-  </div>
-  <div class="field"><label class="chk"><input id="now" type="checkbox"> <span id="nowlbl"></span></label></div>
-  <div class="field"><span id="langlbl" class="flbl"></span>
-    <div class="seg" role="group" id="langgrp">
-      <button type="button" data-l="es" lang="es" aria-pressed="false">Español</button>
-      <button type="button" data-l="en" lang="en" aria-pressed="false">English</button>
-    </div>
-  </div>
-  <div class="field"><span id="themelbl" class="flbl"></span>
-    <div class="seg" role="group" id="theme">
-      <button type="button" data-t="system" aria-pressed="false"></button>
-      <button type="button" data-t="light" aria-pressed="false"></button>
-      <button type="button" data-t="dark" aria-pressed="false"></button>
-    </div>
-  </div>
-  <div class="field"><span id="monthlbl" class="flbl"></span>
-    <button id="rot" type="button"></button>
-  </div>
-  <button id="closebtn" type="button" class="primary"></button>
-</dialog>
-<script src="data/produce.js"></script>
-<script src="app.js"></script>
-<script>if("serviceWorker"in navigator)addEventListener("load",function(){navigator.serviceWorker.register("sw.js")})</script>
+<footer><p id="theme-label"></p><div class="seg" role="group" id="theme">
+  <button id="system" type="button" data-theme="system" aria-pressed="true"></button>
+  <button id="light" type="button" data-theme="light" aria-pressed="false"></button>
+  <button id="dark" type="button" data-theme="dark" aria-pressed="false"></button>
+</div></footer>
+<noscript>JavaScript is needed to display the crop catalog and month controls.</noscript>
+<template id="legacy-shell">
+  <a class="skip" href="#grid-wrap" id="skiplbl">Skip to table</a>
+  <header><div class="bar"><h1>Temporada</h1><button id="settingsbtn" type="button" aria-haspopup="dialog"><span aria-hidden="true">⚙ </span><span id="settingslbl"></span></button></div></header>
+  <main>
+    <section class="controls" id="filters" aria-label="Filters"><input id="q" type="search" autocomplete="off"></section>
+    <p id="count" aria-live="polite"></p>
+    <div class="wrap" id="grid-wrap" role="region" tabindex="0"><table id="grid"></table></div>
+  </main>
+  <dialog id="settings" aria-labelledby="settingsttl">
+    <h2 id="settingsttl"></h2>
+    <div class="field"><span id="typelbl" class="flbl"></span><div class="seg" role="group" id="type"><button type="button" data-v="all" aria-pressed="true"></button><button type="button" data-v="veg" aria-pressed="false"></button><button type="button" data-v="fruit" aria-pressed="false"></button></div></div>
+    <div class="field"><label class="chk"><input id="now" type="checkbox"> <span id="nowlbl"></span></label></div>
+    <div class="field"><span id="langlbl" class="flbl"></span><div class="seg" role="group" id="langgrp"><button type="button" data-l="es" lang="es" aria-pressed="false">Español</button><button type="button" data-l="en" lang="en" aria-pressed="false">English</button></div></div>
+    <div class="field"><span id="themelbl" class="flbl"></span><div class="seg" role="group" id="theme"><button type="button" data-t="system" aria-pressed="false"></button><button type="button" data-t="light" aria-pressed="false"></button><button type="button" data-t="dark" aria-pressed="false"></button></div></div>
+    <div class="field"><span id="monthlbl" class="flbl"></span><button id="rot" type="button"></button></div>
+    <button id="closebtn" type="button" class="primary"></button>
+  </dialog>
+</template>
+<script>
+if(!window.legacyMode){
+  const data=document.createElement('script');data.src='data/crops-v2.js';data.onerror=legacyFallback;
+  data.onload=function(){if(!window.legacyMode){const app=document.createElement('script');app.src='app-v2.js';app.onerror=legacyFallback;document.body.append(app)}};
+  document.body.append(data);
+}
+</script>
+<script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){var p=document.createElement('p');p.textContent='Offline support could not be enabled. You can keep using this page online.';p.setAttribute('role','status');document.body.append(p)})})</script>
 </body>
 </html>
