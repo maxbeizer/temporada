@@ -1,5 +1,5 @@
-const CACHE = "temporada-v7";
-const SHELL = ["./", "index.html", "style-v2.css", "app-v2.js", "data/crops-v2.js", "manifest.webmanifest", "icons/icon.svg", "icons/icon-192.png", "icons/icon-512.png", "icons/icon-maskable-512.png"];
+const CACHE = "temporada-v8";
+const SHELL = ["./", "index.html", "style-v2.css", "app-v2.js", "data/crops-v2.js", "manifest.webmanifest", "icons/icon.svg", "icons/icon-180.png", "icons/icon-192.png", "icons/icon-512.png", "icons/icon-maskable-512.png"];
 const shellURLs = new Set(SHELL.map(path => new URL(path, self.registration.scope).href));
 
 // Wait for existing tabs to close before activating a coherent new shell.
