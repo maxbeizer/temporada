@@ -5,41 +5,62 @@ window.SOURCES = {
     "url": "https://mercadocentral.gob.ar/news/frutas-y-hortalizas-de-estaci%C3%B3n",
     "region": "Mercado Central de Buenos Aires; market supply from multiple production regions",
     "precision": "Autumn; editorial March-May bins, not exact trading dates",
-    "note": "Explicitly identifies winter squash, fennel, apple and pear as autumn arrivals. Preferred over the national seasonal list for these four crops. A seasonal recommendation, not an exhaustive availability calendar or evidence of local cultivation."
+    "note": "Explicitly identifies winter squash, fennel, apple and pear as autumn arrivals. Preferred over the national seasonal list for these four crops. A seasonal recommendation, not an exhaustive availability calendar or evidence of local cultivation.",
+    "titleEs": "Mercado Central: frutas y hortalizas de estación",
+    "regionEs": "Mercado Central de Buenos Aires; oferta proveniente de varias regiones productoras",
+    "precisionEs": "Otoño; períodos editoriales de marzo a mayo, no fechas exactas de comercialización",
+    "noteEs": "Identifica explícitamente el zapallo, el hinojo, la manzana y la pera como productos de otoño. Se prioriza sobre la lista nacional para estos cuatro cultivos. Es una recomendación estacional, no un calendario exhaustivo de disponibilidad ni evidencia de cultivo local."
   },
   "national-buy": {
     "title": "Argentina: Seasonal fruit and vegetables",
     "url": "https://www.argentina.gob.ar/agricultura/mas-frutas-y-verduras/recomendaciones/las-frutas-y-verduras-de-estacion-son-las-mas-sabrosas-y-nutritivas",
     "region": "Argentina; national produce supply, not Buenos Aires cultivation",
     "precision": "Seasonal; editorial month bins, not exact availability dates",
-    "note": "Autumn-winter = March-August; spring = September-November; summer = December-February. Season membership is not exhaustive retail availability. National origins may supply Buenos Aires; no claim of local production."
+    "note": "Autumn-winter = March-August; spring = September-November; summer = December-February. Season membership is not exhaustive retail availability. National origins may supply Buenos Aires; no claim of local production.",
+    "titleEs": "Argentina: frutas y verduras de estación",
+    "regionEs": "Argentina; oferta nacional, no cultivo en Buenos Aires",
+    "precisionEs": "Estacional; períodos editoriales por mes, no fechas exactas de disponibilidad",
+    "noteEs": "Otoño-invierno = marzo-agosto; primavera = septiembre-noviembre; verano = diciembre-febrero. La lista estacional no representa toda la disponibilidad comercial. Buenos Aires puede recibir productos de otras regiones; no implica producción local."
   },
   "city-autumn": {
     "title": "Buenos Aires City: Autumn garden (17 March 2025)",
     "url": "https://buenosaires.gob.ar/gcaba_historico/noticias/huerta-de-otono-consejos-y-recomendaciones-para-cultivar-productos-de",
     "region": "Buenos Aires City; applicable reference for Belgrano",
     "precision": "Autumn only; editorial March-May bins",
-    "note": "The article explicitly recommends sowing but does not assign propagation methods or exact months. Conditions of soil and light qualify the recommendation. Its broad cabbage-family category is not assigned to specific brassicas."
+    "note": "The article explicitly recommends sowing but does not assign propagation methods or exact months. Conditions of soil and light qualify the recommendation. Its broad cabbage-family category is not assigned to specific brassicas.",
+    "titleEs": "Ciudad de Buenos Aires: huerta de otoño (17 de marzo de 2025)",
+    "regionEs": "Ciudad de Buenos Aires; referencia aplicable a Belgrano",
+    "precisionEs": "Solo otoño; período editorial de marzo a mayo",
+    "noteEs": "El artículo recomienda explícitamente sembrar, pero no indica métodos de propagación ni meses exactos. La recomendación depende de las condiciones del suelo y de luz. Su categoría amplia de coles no se asigna a brásicas específicas."
   },
   "gba-all-year": {
     "title": "Buenos Aires Province: Primary-level garden workbook, page 6",
     "url": "https://www.ambiente.gba.gob.ar/pdfs/008_CUADERNO%20DE%20HUERTA%20PRIMARIA_ABR24.pdf",
     "region": "Buenos Aires Province; broad regional guidance, not a Belgrano site assessment",
     "precision": "Explicit all-year planting statement",
-    "note": "The all-year planting section lists Swiss chard, carrot, arugula and radish. Method is not distinguished. The graphical seasonal calendar was not transcribed from text extraction."
+    "note": "The all-year planting section lists Swiss chard, carrot, arugula and radish. Method is not distinguished. The graphical seasonal calendar was not transcribed from text extraction.",
+    "titleEs": "Provincia de Buenos Aires: cuaderno de huerta para nivel primario, página 6",
+    "regionEs": "Provincia de Buenos Aires; orientación regional amplia, no una evaluación de un sitio en Belgrano",
+    "precisionEs": "Indicación explícita de siembra durante todo el año",
+    "noteEs": "La sección de siembra durante todo el año incluye acelga, zanahoria, rúcula y rabanito. No distingue el método. El calendario estacional gráfico no se transcribió a partir de la extracción de texto."
   },
   "inta-calendar": {
     "title": "INTA: Planting calendar, spring-summer and autumn-winter tables",
     "url": "https://www.argentina.gob.ar/sites/default/files/2023/08/script-tmp-inta_-calendario_de_siembra.pdf",
     "region": "Argentina; the PDF references INTA but does not explicitly identify a geographic coverage area",
     "precision": "Printed month ranges, not exact dates",
-    "note": "General INTA reference, not a verified Belgrano-specific calendar. Region and cultivar uncertainty apply. Seedbed or nursery entries map to seedStart except sweet potato, whose nursery material is unspecified and therefore omitted. Ambiguous punctuation-only ranges are omitted."
+    "note": "General INTA reference, not a verified Belgrano-specific calendar. Region and cultivar uncertainty apply. Seedbed or nursery entries map to seedStart except sweet potato, whose nursery material is unspecified and therefore omitted. Ambiguous punctuation-only ranges are omitted.",
+    "titleEs": "INTA: calendario de siembra, tablas primavera-verano y otoño-invierno",
+    "regionEs": "Argentina; el PDF hace referencia al INTA, pero no identifica explícitamente el área geográfica cubierta",
+    "precisionEs": "Rangos mensuales impresos, no fechas exactas",
+    "noteEs": "Referencia general del INTA, no un calendario verificado específicamente para Belgrano. Existen incertidumbres sobre la región y los cultivares. Las entradas de almácigo o vivero se clasifican como inicio en almácigo, excepto la batata, cuyo material de vivero no está especificado y por eso se omite. Se omiten los rangos ambiguos indicados solo con puntuación."
   }
 };
 window.CROPS = [
   {
     "id": "apple",
     "name": "Apple",
+    "nameEs": "Manzana",
     "emoji": "🍎",
     "category": "fruit",
     "buy": {
@@ -51,13 +72,15 @@ window.CROPS = [
       "sources": [
         "central-autumn"
       ],
-      "note": "Mercado Central explicitly names this crop as an autumn arrival. March-May are coarse editorial bins. Preferred over the broader national list; other months remain outside this recommendation, not proof of retail absence."
+      "note": "Mercado Central explicitly names this crop as an autumn arrival. March-May are coarse editorial bins. Preferred over the broader national list; other months remain outside this recommendation, not proof of retail absence.",
+      "noteEs": "El Mercado Central menciona explícitamente este cultivo como producto de otoño. Marzo-mayo son períodos editoriales aproximados. Se prioriza sobre la lista nacional más amplia; que otros meses no estén incluidos no demuestra que no se venda."
     },
     "plant": null
   },
   {
     "id": "apricot",
     "name": "Apricot",
+    "nameEs": "Damasco",
     "emoji": "🍑",
     "category": "fruit",
     "buy": {
@@ -69,13 +92,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "artichoke",
     "name": "Artichoke",
+    "nameEs": "Alcaucil",
     "emoji": "🌿",
     "category": "vegetable",
     "buy": {
@@ -87,13 +112,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "arugula",
     "name": "Arugula",
+    "nameEs": "Rúcula",
     "emoji": "🥬",
     "category": "vegetable",
     "buy": null,
@@ -117,13 +144,15 @@ window.CROPS = [
         "sources": [
           "gba-all-year"
         ],
-        "note": "Explicit all-year planting guidance; propagation method unspecified. Not an assertion that every cultivar suits every month."
+        "note": "Explicit all-year planting guidance; propagation method unspecified. Not an assertion that every cultivar suits every month.",
+        "noteEs": "Orientación explícita de siembra durante todo el año; método de propagación no especificado. No afirma que todos los cultivares sean adecuados para todos los meses."
       }
     ]
   },
   {
     "id": "asparagus",
     "name": "Asparagus",
+    "nameEs": "Espárrago",
     "emoji": "🌿",
     "category": "vegetable",
     "buy": {
@@ -138,13 +167,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "avocado",
     "name": "Avocado",
+    "nameEs": "Palta",
     "emoji": "🥑",
     "category": "fruit",
     "buy": {
@@ -162,13 +193,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "banana",
     "name": "Banana",
+    "nameEs": "Banana",
     "emoji": "🍌",
     "category": "fruit",
     "buy": {
@@ -186,13 +219,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "basil",
     "name": "Basil",
+    "nameEs": "Albahaca",
     "emoji": "🌿",
     "category": "herb",
     "buy": null,
@@ -206,7 +241,8 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Basil: seedbed Aug-Sep. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Basil: seedbed Aug-Sep. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Albahaca: almácigo Ago-Set. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       },
       {
         "action": "transplant",
@@ -217,13 +253,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Basil: transplant Oct-Nov. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Basil: transplant Oct-Nov. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Albahaca: transplante Oct-Nov. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "beet",
     "name": "Beet",
+    "nameEs": "Remolacha",
     "emoji": "🥕",
     "category": "vegetable",
     "buy": {
@@ -241,7 +279,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -254,13 +293,15 @@ window.CROPS = [
         "sources": [
           "city-autumn"
         ],
-        "note": "Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting."
+        "note": "Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting.",
+        "noteEs": "Siembra de otoño; marzo-mayo son períodos editoriales aproximados. La fuente no distingue entre siembra directa e inicio en almácigo."
       }
     ]
   },
   {
     "id": "pepper",
     "name": "Bell pepper",
+    "nameEs": "Pimiento",
     "emoji": "🫑",
     "category": "vegetable",
     "buy": {
@@ -272,7 +313,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -284,7 +326,8 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Bell pepper: seedbed Jul-Aug. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Bell pepper: seedbed Jul-Aug. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Pimiento: almácigo Jul-Ago. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       },
       {
         "action": "transplant",
@@ -294,13 +337,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Bell pepper: transplant Oct. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Bell pepper: transplant Oct. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Pimiento: transplante Oct. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "blackberry",
     "name": "Blackberry",
+    "nameEs": "Mora",
     "emoji": "🫐",
     "category": "fruit",
     "buy": {
@@ -312,13 +357,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "blueberry",
     "name": "Blueberry",
+    "nameEs": "Arándano",
     "emoji": "🫐",
     "category": "fruit",
     "buy": {
@@ -333,13 +380,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "broccoli",
     "name": "Broccoli",
+    "nameEs": "Brócoli",
     "emoji": "🥦",
     "category": "vegetable",
     "buy": {
@@ -354,7 +403,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -366,7 +416,8 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Broccoli: seedbed Feb-Mar. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Broccoli: seedbed Feb-Mar. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Brócoli: almácigo Feb-Mar. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       },
       {
         "action": "transplant",
@@ -377,13 +428,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Broccoli: transplant Mar-Apr. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Broccoli: transplant Mar-Apr. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Brócoli: transplante Mar-Abr. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "brussels-sprout",
     "name": "Brussels sprout",
+    "nameEs": "Repollito de Bruselas",
     "emoji": "🥬",
     "category": "vegetable",
     "buy": {
@@ -398,13 +451,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "cabbage",
     "name": "Cabbage",
+    "nameEs": "Repollo",
     "emoji": "🥬",
     "category": "vegetable",
     "buy": {
@@ -419,13 +474,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "cardoon",
     "name": "Cardoon",
+    "nameEs": "Cardo",
     "emoji": "🌿",
     "category": "vegetable",
     "buy": {
@@ -440,13 +497,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "carrot",
     "name": "Carrot",
+    "nameEs": "Zanahoria",
     "emoji": "🥕",
     "category": "vegetable",
     "buy": {
@@ -461,7 +520,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -483,13 +543,15 @@ window.CROPS = [
         "sources": [
           "gba-all-year"
         ],
-        "note": "Explicit all-year planting guidance; propagation method unspecified. Not an assertion that every cultivar suits every month."
+        "note": "Explicit all-year planting guidance; propagation method unspecified. Not an assertion that every cultivar suits every month.",
+        "noteEs": "Orientación explícita de siembra durante todo el año; método de propagación no especificado. No afirma que todos los cultivares sean adecuados para todos los meses."
       }
     ]
   },
   {
     "id": "cauliflower",
     "name": "Cauliflower",
+    "nameEs": "Coliflor",
     "emoji": "🥦",
     "category": "vegetable",
     "buy": {
@@ -504,7 +566,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -516,7 +579,8 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Cauliflower: seedbed Feb-Mar. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Cauliflower: seedbed Feb-Mar. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Coliflor: almácigo Feb-Mar. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       },
       {
         "action": "transplant",
@@ -527,13 +591,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Cauliflower: transplant Mar-Apr. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Cauliflower: transplant Mar-Apr. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Coliflor: transplante Mar-Abr. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "celery",
     "name": "Celery",
+    "nameEs": "Apio",
     "emoji": "🥬",
     "category": "vegetable",
     "buy": {
@@ -551,7 +617,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -564,7 +631,8 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Celery: seedbed Sep-Nov for the spring cultivars Platense and Golden Boy, page 1. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Celery: seedbed Sep-Nov for the spring cultivars Platense and Golden Boy, page 1. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Apio: almácigo Sept-Nov.; variedades de primavera Platense y Golden Boy, página 1. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       },
       {
         "action": "transplant",
@@ -577,7 +645,8 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Celery: transplant Dec-Mar for the spring cultivars Platense and Golden Boy, page 1. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Celery: transplant Dec-Mar for the spring cultivars Platense and Golden Boy, page 1. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Apio: transplante Dic-Mar.; variedades de primavera Platense y Golden Boy, página 1. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       },
       {
         "action": "seedStart",
@@ -587,7 +656,8 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Celery: seedbed Mar for the autumn cultivars Verde de Cortar and De Verdeo, page 1. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Celery: seedbed Mar for the autumn cultivars Verde de Cortar and De Verdeo, page 1. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Apio: almácigo Marzo; variedades de otoño Verde de Cortar y De Verdeo, página 1. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       },
       {
         "action": "transplant",
@@ -597,13 +667,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Celery: transplant May for the autumn cultivars Verde de Cortar and De Verdeo, page 1. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Celery: transplant May for the autumn cultivars Verde de Cortar and De Verdeo, page 1. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Apio: transplante Mayo; variedades de otoño Verde de Cortar y De Verdeo, página 1. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "cherry",
     "name": "Cherry",
+    "nameEs": "Cereza",
     "emoji": "🍒",
     "category": "fruit",
     "buy": {
@@ -618,13 +690,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "chicory",
     "name": "Chicory",
+    "nameEs": "Achicoria",
     "emoji": "🥬",
     "category": "vegetable",
     "buy": {
@@ -642,7 +716,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -656,13 +731,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Chicory: direct sowing in rows Feb-May; autumn-winter table. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Chicory: direct sowing in rows Feb-May; autumn-winter table. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Radicheta o Achicoria: directa a chorrillo Feb-May. Corresponde a la tabla de otoño-invierno. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "cucumber",
     "name": "Cucumber",
+    "nameEs": "Pepino",
     "emoji": "🥒",
     "category": "vegetable",
     "buy": {
@@ -674,7 +751,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -685,13 +763,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Cucumber: direct sowing Oct. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Cucumber: direct sowing Oct. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Pepino: directa Oct. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "eggplant",
     "name": "Eggplant",
+    "nameEs": "Berenjena",
     "emoji": "🍆",
     "category": "vegetable",
     "buy": {
@@ -703,7 +783,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -715,7 +796,8 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Eggplant: seedbed Aug-Sep. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Eggplant: seedbed Aug-Sep. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Berenjena: almácigo Ago-Set. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       },
       {
         "action": "transplant",
@@ -726,13 +808,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Eggplant: transplant Oct-Nov. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Eggplant: transplant Oct-Nov. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Berenjena: transplante Oct-Nov. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "escarole",
     "name": "Escarole",
+    "nameEs": "Escarola",
     "emoji": "🥬",
     "category": "vegetable",
     "buy": {
@@ -747,7 +831,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -759,13 +844,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Escarole: direct sowing Feb-Mar. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Escarole: direct sowing Feb-Mar. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Escarola: directa Feb-Mar. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "fava-bean",
     "name": "Fava bean",
+    "nameEs": "Haba",
     "emoji": "🫘",
     "category": "vegetable",
     "buy": {
@@ -777,13 +864,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "fennel",
     "name": "Fennel",
+    "nameEs": "Hinojo",
     "emoji": "🌿",
     "category": "vegetable",
     "buy": {
@@ -795,13 +884,15 @@ window.CROPS = [
       "sources": [
         "central-autumn"
       ],
-      "note": "Mercado Central explicitly names this crop as an autumn arrival. March-May are coarse editorial bins. Preferred over the broader national list; other months remain outside this recommendation, not proof of retail absence."
+      "note": "Mercado Central explicitly names this crop as an autumn arrival. March-May are coarse editorial bins. Preferred over the broader national list; other months remain outside this recommendation, not proof of retail absence.",
+      "noteEs": "El Mercado Central menciona explícitamente este cultivo como producto de otoño. Marzo-mayo son períodos editoriales aproximados. Se prioriza sobre la lista nacional más amplia; que otros meses no estén incluidos no demuestra que no se venda."
     },
     "plant": null
   },
   {
     "id": "fig",
     "name": "Fig",
+    "nameEs": "Higo",
     "emoji": "🫐",
     "category": "fruit",
     "buy": {
@@ -813,13 +904,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "garlic",
     "name": "Garlic",
+    "nameEs": "Ajo",
     "emoji": "🧄",
     "category": "vegetable",
     "buy": null,
@@ -833,13 +926,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Garlic: direct planting Mar-Apr; planting cloves, not seed starting. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Garlic: direct planting Mar-Apr; planting cloves, not seed starting. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Ajo: directa Mar-Abr. Es plantación directa de dientes, no inicio de semillas en almácigo. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "grape",
     "name": "Grape",
+    "nameEs": "Uva",
     "emoji": "🍇",
     "category": "fruit",
     "buy": {
@@ -851,13 +946,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "grapefruit",
     "name": "Grapefruit",
+    "nameEs": "Pomelo",
     "emoji": "🍊",
     "category": "fruit",
     "buy": {
@@ -872,13 +969,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "green-bean",
     "name": "Green bean",
+    "nameEs": "Chaucha",
     "emoji": "🫘",
     "category": "vegetable",
     "buy": {
@@ -896,7 +995,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -910,13 +1010,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Green bean: direct sowing Oct-Jan; window crosses the year boundary. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Green bean: direct sowing Oct-Jan; window crosses the year boundary. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Poroto chaucha: directa Oct-Ene. El período cruza el fin de año. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "leek",
     "name": "Leek",
+    "nameEs": "Puerro",
     "emoji": "🥬",
     "category": "vegetable",
     "buy": {
@@ -934,7 +1036,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -947,13 +1050,15 @@ window.CROPS = [
         "sources": [
           "city-autumn"
         ],
-        "note": "Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting."
+        "note": "Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting.",
+        "noteEs": "Siembra de otoño; marzo-mayo son períodos editoriales aproximados. La fuente no distingue entre siembra directa e inicio en almácigo."
       }
     ]
   },
   {
     "id": "lemon",
     "name": "Lemon",
+    "nameEs": "Limón",
     "emoji": "🍋",
     "category": "fruit",
     "buy": {
@@ -974,13 +1079,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "lettuce",
     "name": "Lettuce",
+    "nameEs": "Lechuga",
     "emoji": "🥬",
     "category": "vegetable",
     "buy": {
@@ -992,7 +1099,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -1005,13 +1113,15 @@ window.CROPS = [
         "sources": [
           "city-autumn"
         ],
-        "note": "Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting."
+        "note": "Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting.",
+        "noteEs": "Siembra de otoño; marzo-mayo son períodos editoriales aproximados. La fuente no distingue entre siembra directa e inicio en almácigo."
       }
     ]
   },
   {
     "id": "mandarin",
     "name": "Mandarin",
+    "nameEs": "Mandarina",
     "emoji": "🍊",
     "category": "fruit",
     "buy": {
@@ -1026,13 +1136,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "melon",
     "name": "Melon",
+    "nameEs": "Melón",
     "emoji": "🍈",
     "category": "fruit",
     "buy": {
@@ -1050,7 +1162,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -1061,13 +1174,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Melon: direct sowing Oct. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Melon: direct sowing Oct. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Melón: directa Oct. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "nectarine",
     "name": "Nectarine",
+    "nameEs": "Pelón",
     "emoji": "🍑",
     "category": "fruit",
     "buy": {
@@ -1085,13 +1200,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "olive",
     "name": "Olive",
+    "nameEs": "Oliva",
     "emoji": "🫒",
     "category": "fruit",
     "buy": {
@@ -1106,13 +1223,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "onion",
     "name": "Onion",
+    "nameEs": "Cebolla",
     "emoji": "🧅",
     "category": "vegetable",
     "buy": {
@@ -1124,7 +1243,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -1137,7 +1257,8 @@ window.CROPS = [
         "sources": [
           "city-autumn"
         ],
-        "note": "Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting."
+        "note": "Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting.",
+        "noteEs": "Siembra de otoño; marzo-mayo son períodos editoriales aproximados. La fuente no distingue entre siembra directa e inicio en almácigo."
       },
       {
         "action": "seedStart",
@@ -1148,7 +1269,8 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Bulb onion: seedbed Mar-Apr; no dated transplant row. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Bulb onion: seedbed Mar-Apr; no dated transplant row. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Cebolla bulbo: almácigo Mar-Abr. No hay una fila de trasplante con fecha. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       },
       {
         "action": "directSow",
@@ -1158,13 +1280,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Bulb onion: direct sowing Apr. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Bulb onion: direct sowing Apr. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Cebolla bulbo: directa Abr. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "orange",
     "name": "Orange",
+    "nameEs": "Naranja",
     "emoji": "🍊",
     "category": "fruit",
     "buy": {
@@ -1185,13 +1309,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "papaya",
     "name": "Papaya",
+    "nameEs": "Papaya",
     "emoji": "🍈",
     "category": "fruit",
     "buy": {
@@ -1203,13 +1329,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "parsley",
     "name": "Parsley",
+    "nameEs": "Perejil",
     "emoji": "🌿",
     "category": "herb",
     "buy": {
@@ -1221,7 +1349,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -1234,7 +1363,8 @@ window.CROPS = [
         "sources": [
           "city-autumn"
         ],
-        "note": "Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting."
+        "note": "Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting.",
+        "noteEs": "Siembra de otoño; marzo-mayo son períodos editoriales aproximados. La fuente no distingue entre siembra directa e inicio en almácigo."
       },
       {
         "action": "directSow",
@@ -1244,13 +1374,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Parsley: direct sowing in rows Sep. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Parsley: direct sowing in rows Sep. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Perejil: directa a chorrillo Setiembre. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "peach",
     "name": "Peach",
+    "nameEs": "Durazno",
     "emoji": "🍑",
     "category": "fruit",
     "buy": {
@@ -1268,13 +1400,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "pear",
     "name": "Pear",
+    "nameEs": "Pera",
     "emoji": "🍐",
     "category": "fruit",
     "buy": {
@@ -1286,13 +1420,15 @@ window.CROPS = [
       "sources": [
         "central-autumn"
       ],
-      "note": "Mercado Central explicitly names this crop as an autumn arrival. March-May are coarse editorial bins. Preferred over the broader national list; other months remain outside this recommendation, not proof of retail absence."
+      "note": "Mercado Central explicitly names this crop as an autumn arrival. March-May are coarse editorial bins. Preferred over the broader national list; other months remain outside this recommendation, not proof of retail absence.",
+      "noteEs": "El Mercado Central menciona explícitamente este cultivo como producto de otoño. Marzo-mayo son períodos editoriales aproximados. Se prioriza sobre la lista nacional más amplia; que otros meses no estén incluidos no demuestra que no se venda."
     },
     "plant": null
   },
   {
     "id": "peas",
     "name": "Peas",
+    "nameEs": "Arveja",
     "emoji": "🫛",
     "category": "vegetable",
     "buy": null,
@@ -1307,7 +1443,8 @@ window.CROPS = [
         "sources": [
           "city-autumn"
         ],
-        "note": "Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting."
+        "note": "Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting.",
+        "noteEs": "Siembra de otoño; marzo-mayo son períodos editoriales aproximados. La fuente no distingue entre siembra directa e inicio en almácigo."
       },
       {
         "action": "directSow",
@@ -1319,13 +1456,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Peas: direct sowing Jun-Aug; the City source separately supports unspecified autumn sowing. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Peas: direct sowing Jun-Aug; the City source separately supports unspecified autumn sowing. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Arveja: directa Jun-Ago. La fuente de la Ciudad también respalda una siembra de otoño sin método especificado. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "pineapple",
     "name": "Pineapple",
+    "nameEs": "Ananá",
     "emoji": "🍍",
     "category": "fruit",
     "buy": {
@@ -1340,13 +1479,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "plum",
     "name": "Plum",
+    "nameEs": "Ciruela",
     "emoji": "🍑",
     "category": "fruit",
     "buy": {
@@ -1364,13 +1505,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "quince",
     "name": "Quince",
+    "nameEs": "Membrillo",
     "emoji": "🍐",
     "category": "fruit",
     "buy": {
@@ -1385,13 +1528,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "radish",
     "name": "Radish",
+    "nameEs": "Rabanito",
     "emoji": "🥕",
     "category": "vegetable",
     "buy": {
@@ -1409,7 +1554,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -1431,13 +1577,15 @@ window.CROPS = [
         "sources": [
           "gba-all-year"
         ],
-        "note": "Explicit all-year planting guidance; propagation method unspecified. Not an assertion that every cultivar suits every month."
+        "note": "Explicit all-year planting guidance; propagation method unspecified. Not an assertion that every cultivar suits every month.",
+        "noteEs": "Orientación explícita de siembra durante todo el año; método de propagación no especificado. No afirma que todos los cultivares sean adecuados para todos los meses."
       }
     ]
   },
   {
     "id": "raspberry",
     "name": "Raspberry",
+    "nameEs": "Frambuesa",
     "emoji": "🫐",
     "category": "fruit",
     "buy": {
@@ -1452,13 +1600,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "scallion",
     "name": "Scallion",
+    "nameEs": "Cebolla de verdeo",
     "emoji": "🧅",
     "category": "vegetable",
     "buy": {
@@ -1473,7 +1623,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -1488,7 +1639,8 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Scallion: seedbed Feb-Jun. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Scallion: seedbed Feb-Jun. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Cebolla de verdeo: almácigo Feb-Jun. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       },
       {
         "action": "directSow",
@@ -1500,13 +1652,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Scallion: direct sowing Mar-May. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Scallion: direct sowing Mar-May. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Cebolla de verdeo: directa Mar-May. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "spinach",
     "name": "Spinach",
+    "nameEs": "Espinaca",
     "emoji": "🥬",
     "category": "vegetable",
     "buy": {
@@ -1521,7 +1675,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -1534,13 +1689,15 @@ window.CROPS = [
         "sources": [
           "city-autumn"
         ],
-        "note": "Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting."
+        "note": "Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting.",
+        "noteEs": "Siembra de otoño; marzo-mayo son períodos editoriales aproximados. La fuente no distingue entre siembra directa e inicio en almácigo."
       }
     ]
   },
   {
     "id": "strawberry",
     "name": "Strawberry",
+    "nameEs": "Frutilla",
     "emoji": "🍓",
     "category": "fruit",
     "buy": {
@@ -1555,13 +1712,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "summer-squash",
     "name": "Summer squash",
+    "nameEs": "Zapallito",
     "emoji": "🥒",
     "category": "vegetable",
     "buy": {
@@ -1573,7 +1732,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -1587,13 +1747,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Summer squash: direct sowing Oct-Jan; window crosses the year boundary. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Summer squash: direct sowing Oct-Jan; window crosses the year boundary. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Zapallito: directa Oct-Ene. El período cruza el fin de año. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "sweet-corn",
     "name": "Sweet corn",
+    "nameEs": "Choclo",
     "emoji": "🌽",
     "category": "vegetable",
     "buy": {
@@ -1605,7 +1767,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -1618,13 +1781,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Sweet corn: direct sowing Oct-Dec. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Sweet corn: direct sowing Oct-Dec. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Maíz dulce: directa Oct-Dic. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "sweet-potato",
     "name": "Sweet potato",
+    "nameEs": "Batata",
     "emoji": "🍠",
     "category": "vegetable",
     "buy": {
@@ -1639,7 +1804,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -1650,13 +1816,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Sweet potato: transplant Oct.; nursery propagation not classified as seed starting. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Sweet potato: transplant Oct.; nursery propagation not classified as seed starting. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Batata: transplante Oct. La propagación con material de vivero no se clasifica como inicio en almácigo. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "chard",
     "name": "Swiss chard",
+    "nameEs": "Acelga",
     "emoji": "🥬",
     "category": "vegetable",
     "buy": {
@@ -1677,7 +1845,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -1699,13 +1868,15 @@ window.CROPS = [
         "sources": [
           "gba-all-year"
         ],
-        "note": "Explicit all-year planting guidance; propagation method unspecified. Not an assertion that every cultivar suits every month."
+        "note": "Explicit all-year planting guidance; propagation method unspecified. Not an assertion that every cultivar suits every month.",
+        "noteEs": "Orientación explícita de siembra durante todo el año; método de propagación no especificado. No afirma que todos los cultivares sean adecuados para todos los meses."
       }
     ]
   },
   {
     "id": "tomato",
     "name": "Tomato",
+    "nameEs": "Tomate",
     "emoji": "🍅",
     "category": "vegetable",
     "buy": {
@@ -1717,7 +1888,8 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": [
       {
@@ -1729,7 +1901,8 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Tomato: seedbed Sep-Oct. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Tomato: seedbed Sep-Oct. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Tomate: almácigo Sep-Oct. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       },
       {
         "action": "transplant",
@@ -1740,13 +1913,15 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Tomato: transplant Oct-Nov. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Tomato: transplant Oct-Nov. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Tomate: transplante Oct-Nov. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   },
   {
     "id": "turnip",
     "name": "Turnip",
+    "nameEs": "Nabo",
     "emoji": "🥕",
     "category": "vegetable",
     "buy": {
@@ -1764,13 +1939,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "turnip-greens",
     "name": "Turnip greens",
+    "nameEs": "Hojas de nabo",
     "emoji": "🥬",
     "category": "vegetable",
     "buy": {
@@ -1788,13 +1965,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "watercress",
     "name": "Watercress",
+    "nameEs": "Berro",
     "emoji": "🌿",
     "category": "vegetable",
     "buy": {
@@ -1809,13 +1988,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "watermelon",
     "name": "Watermelon",
+    "nameEs": "Sandía",
     "emoji": "🍉",
     "category": "fruit",
     "buy": {
@@ -1827,13 +2008,15 @@ window.CROPS = [
       "sources": [
         "national-buy"
       ],
-      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation."
+      "note": "Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.",
+      "noteEs": "Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local."
     },
     "plant": null
   },
   {
     "id": "winter-squash",
     "name": "Winter squash",
+    "nameEs": "Zapallo",
     "emoji": "🎃",
     "category": "vegetable",
     "buy": {
@@ -1845,7 +2028,8 @@ window.CROPS = [
       "sources": [
         "central-autumn"
       ],
-      "note": "Mercado Central explicitly names this crop as an autumn arrival. March-May are coarse editorial bins. Preferred over the broader national list; other months remain outside this recommendation, not proof of retail absence."
+      "note": "Mercado Central explicitly names this crop as an autumn arrival. March-May are coarse editorial bins. Preferred over the broader national list; other months remain outside this recommendation, not proof of retail absence.",
+      "noteEs": "El Mercado Central menciona explícitamente este cultivo como producto de otoño. Marzo-mayo son períodos editoriales aproximados. Se prioriza sobre la lista nacional más amplia; que otros meses no estén incluidos no demuestra que no se venda."
     },
     "plant": [
       {
@@ -1857,7 +2041,8 @@ window.CROPS = [
         "sources": [
           "inta-calendar"
         ],
-        "note": "Winter squash: direct sowing Oct-Nov. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee."
+        "note": "Winter squash: direct sowing Oct-Nov. INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.",
+        "noteEs": "Calabaza y zapallo: directa Oct-Nov. La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano."
       }
     ]
   }

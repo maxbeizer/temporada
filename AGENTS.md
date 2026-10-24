@@ -4,7 +4,7 @@ Static site (`index.html`, `app-v2.js`, `style-v2.css`, generated `data/crops-v2
 
 ## Rules
 - **Never convey info by color alone.** Active/inactive/unknown states have visible text; decorative emoji use `aria-hidden="true"`. New states need a text equivalent.
-- **All UI strings live in `T` in `app-v2.js`**, including accessible names, statuses, errors, and visually hidden text. The rebuilt application is English-only; keep `document.documentElement.lang="en"`.
+- **All UI strings live in `T` in `app-v2.js`**, including accessible names, statuses, errors, and visually hidden text. Keep English and Spanish complete and set `document.documentElement.lang` to the active language.
 - **Semantics first:** one `<main>`, a skip link, one `<h1>`, and a real list of crop-card `<article>` elements. Preserve logical heading levels inside schedule details. Use `<button>`, `<input>`, `<details>`, and links, never clickable `div`/`span`.
 - **Toggle buttons** use `aria-pressed`; button groups have an `aria-label`. Every input has an accessible name. Result changes are announced via the `#count` `aria-live="polite"` region.
 - **Don't use `aria-label` on `span`** (unreliable); use visually hidden text. Decorative elements get `aria-hidden="true"`. Don't rely on `title` for meaning.

@@ -1,8 +1,8 @@
 # Temporada
 
-Mobile-first planting options and seasonal buying guidance for Belgrano, Buenos Aires. English-only, with emoji alongside crop names. Inspired by https://github.com/crittermike/planting-calendar; rebuilt here without location configuration, accounts, or tracking.
+Mobile-first planting options and seasonal buying guidance for Belgrano, Buenos Aires. The interface and crop names are available in English and Spanish, with emoji alongside crop names. Inspired by https://github.com/crittermike/planting-calendar; rebuilt here without location configuration, accounts, or tracking.
 
-Plant opens by default; the last-used Plant/Buy view and theme are saved on this browser when storage is available. Each visit starts on the current Buenos Aires month. Browse months for current opportunities, or search any crop to inspect its annual schedule, including inactive months and unknown schedules. Market seasonality is independent of planting and is not a garden-harvest prediction.
+Plant opens by default; the last-used Plant/Buy view, language, and theme are saved on this browser when storage is available. On a first visit, language follows the browser when it is Spanish and otherwise defaults to English. Each visit starts on the current Buenos Aires month. Browse months for current opportunities, or search any crop in either language to inspect its annual schedule, including inactive months and unknown schedules. Market seasonality is independent of planting and is not a garden-harvest prediction.
 
 ## Run and maintain
 

@@ -55,6 +55,7 @@
   <input id="q" type="search" autocomplete="off">
   <p id="preference-status" role="status"></p>
   <p id="data-error" role="alert"></p>
+  <p id="offline-error" role="status" hidden></p>
   <section id="crops" tabindex="-1" aria-labelledby="count">
     <h2 id="count" aria-live="polite" aria-atomic="true"></h2>
     <p id="empty"></p>
@@ -62,11 +63,17 @@
   </section>
   <p id="timing" class="muted"></p>
 </main>
-<footer><p id="theme-label"></p><div class="seg" role="group" id="theme">
-  <button id="system" type="button" data-theme="system" aria-pressed="true"></button>
-  <button id="light" type="button" data-theme="light" aria-pressed="false"></button>
-  <button id="dark" type="button" data-theme="dark" aria-pressed="false"></button>
-</div></footer>
+<footer>
+  <p id="theme-label"></p><div class="seg" role="group" id="theme">
+    <button id="system" type="button" data-theme="system" aria-pressed="true"></button>
+    <button id="light" type="button" data-theme="light" aria-pressed="false"></button>
+    <button id="dark" type="button" data-theme="dark" aria-pressed="false"></button>
+  </div>
+  <p id="language-label"></p><div class="seg" role="group" id="language">
+    <button type="button" data-lang="en" lang="en" aria-pressed="true">English</button>
+    <button type="button" data-lang="es" lang="es" aria-pressed="false">Español</button>
+  </div>
+</footer>
 <noscript>JavaScript is needed to display the crop catalog and month controls.</noscript>
 <template id="legacy-shell">
   <a class="skip" href="#grid-wrap" id="skiplbl">Skip to table</a>
@@ -93,6 +100,6 @@ if(!window.legacyMode){
   document.body.append(data);
 }
 </script>
-<script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){var p=document.createElement('p');p.textContent='Offline support could not be enabled. You can keep using this page online.';p.setAttribute('role','status');document.body.append(p)})})</script>
+<script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){var p=document.getElementById('offline-error');if(p)p.hidden=false})})</script>
 </body>
 </html>
