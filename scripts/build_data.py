@@ -14,7 +14,7 @@ from typing import Literal, TypedDict
 from urllib.parse import urlsplit
 
 
-class Source(TypedDict):
+class SourceEnglish(TypedDict):
     title: str
     url: str
     region: str
@@ -22,10 +22,18 @@ class Source(TypedDict):
     note: str
 
 
+class Source(SourceEnglish):
+    titleEs: str
+    regionEs: str
+    precisionEs: str
+    noteEs: str
+
+
 class BuyWindow(TypedDict):
     months: list[int]
     sources: list[str]
     note: str
+    noteEs: str
 
 
 class PlantWindow(BuyWindow):
@@ -35,6 +43,7 @@ class PlantWindow(BuyWindow):
 class Crop(TypedDict):
     id: str
     name: str
+    nameEs: str
     emoji: str
     category: str
     buy: BuyWindow | None
@@ -47,7 +56,7 @@ class Catalog(TypedDict):
 
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-SOURCES: dict[str, Source] = {
+SOURCES: dict[str, SourceEnglish] = {
     'central-autumn': {
         'title': 'Mercado Central: Seasonal fruit and vegetables',
         'url': 'https://mercadocentral.gob.ar/news/frutas-y-hortalizas-de-estaci%C3%B3n',
@@ -82,6 +91,39 @@ SOURCES: dict[str, Source] = {
         'region': 'Argentina; the PDF references INTA but does not explicitly identify a geographic coverage area',
         'precision': 'Printed month ranges, not exact dates',
         'note': 'General INTA reference, not a verified Belgrano-specific calendar. Region and cultivar uncertainty apply. Seedbed or nursery entries map to seedStart except sweet potato, whose nursery material is unspecified and therefore omitted. Ambiguous punctuation-only ranges are omitted.',
+    },
+}
+
+SOURCE_TRANSLATIONS = {
+    'central-autumn': {
+        'titleEs': 'Mercado Central: frutas y hortalizas de estación',
+        'regionEs': 'Mercado Central de Buenos Aires; oferta proveniente de varias regiones productoras',
+        'precisionEs': 'Otoño; períodos editoriales de marzo a mayo, no fechas exactas de comercialización',
+        'noteEs': 'Identifica explícitamente el zapallo, el hinojo, la manzana y la pera como productos de otoño. Se prioriza sobre la lista nacional para estos cuatro cultivos. Es una recomendación estacional, no un calendario exhaustivo de disponibilidad ni evidencia de cultivo local.',
+    },
+    'national-buy': {
+        'titleEs': 'Argentina: frutas y verduras de estación',
+        'regionEs': 'Argentina; oferta nacional, no cultivo en Buenos Aires',
+        'precisionEs': 'Estacional; períodos editoriales por mes, no fechas exactas de disponibilidad',
+        'noteEs': 'Otoño-invierno = marzo-agosto; primavera = septiembre-noviembre; verano = diciembre-febrero. La lista estacional no representa toda la disponibilidad comercial. Buenos Aires puede recibir productos de otras regiones; no implica producción local.',
+    },
+    'city-autumn': {
+        'titleEs': 'Ciudad de Buenos Aires: huerta de otoño (17 de marzo de 2025)',
+        'regionEs': 'Ciudad de Buenos Aires; referencia aplicable a Belgrano',
+        'precisionEs': 'Solo otoño; período editorial de marzo a mayo',
+        'noteEs': 'El artículo recomienda explícitamente sembrar, pero no indica métodos de propagación ni meses exactos. La recomendación depende de las condiciones del suelo y de luz. Su categoría amplia de coles no se asigna a brásicas específicas.',
+    },
+    'gba-all-year': {
+        'titleEs': 'Provincia de Buenos Aires: cuaderno de huerta para nivel primario, página 6',
+        'regionEs': 'Provincia de Buenos Aires; orientación regional amplia, no una evaluación de un sitio en Belgrano',
+        'precisionEs': 'Indicación explícita de siembra durante todo el año',
+        'noteEs': 'La sección de siembra durante todo el año incluye acelga, zanahoria, rúcula y rabanito. No distingue el método. El calendario estacional gráfico no se transcribió a partir de la extracción de texto.',
+    },
+    'inta-calendar': {
+        'titleEs': 'INTA: calendario de siembra, tablas primavera-verano y otoño-invierno',
+        'regionEs': 'Argentina; el PDF hace referencia al INTA, pero no identifica explícitamente el área geográfica cubierta',
+        'precisionEs': 'Rangos mensuales impresos, no fechas exactas',
+        'noteEs': 'Referencia general del INTA, no un calendario verificado específicamente para Belgrano. Existen incertidumbres sobre la región y los cultivares. Las entradas de almácigo o vivero se clasifican como inicio en almácigo, excepto la batata, cuyo material de vivero no está especificado y por eso se omite. Se omiten los rangos ambiguos indicados solo con puntuación.',
     },
 }
 
@@ -152,6 +194,25 @@ LABELS = {
  'peas': ('Peas', '🫛', 'vegetable'),
 }
 
+SPANISH_NAMES = {
+ 'olive': 'Oliva', 'chard': 'Acelga', 'chicory': 'Achicoria', 'celery': 'Apio',
+ 'sweet-potato': 'Batata', 'watercress': 'Berro', 'broccoli': 'Brócoli', 'cardoon': 'Cardo',
+ 'cauliflower': 'Coliflor', 'scallion': 'Cebolla de verdeo', 'green-bean': 'Chaucha',
+ 'escarole': 'Escarola', 'spinach': 'Espinaca', 'fennel': 'Hinojo', 'turnip': 'Nabo',
+ 'turnip-greens': 'Hojas de nabo', 'leek': 'Puerro', 'radish': 'Rabanito', 'beet': 'Remolacha',
+ 'cabbage': 'Repollo', 'brussels-sprout': 'Repollito de Bruselas', 'carrot': 'Zanahoria',
+ 'winter-squash': 'Zapallo', 'banana': 'Banana', 'plum': 'Ciruela', 'peach': 'Durazno',
+ 'lemon': 'Limón', 'mandarin': 'Mandarina', 'melon': 'Melón', 'quince': 'Membrillo',
+ 'orange': 'Naranja', 'avocado': 'Palta', 'nectarine': 'Pelón', 'pear': 'Pera',
+ 'grapefruit': 'Pomelo', 'summer-squash': 'Zapallito', 'parsley': 'Perejil', 'fava-bean': 'Haba',
+ 'lettuce': 'Lechuga', 'artichoke': 'Alcaucil', 'asparagus': 'Espárrago', 'strawberry': 'Frutilla',
+ 'raspberry': 'Frambuesa', 'cherry': 'Cereza', 'blueberry': 'Arándano', 'apple': 'Manzana',
+ 'pineapple': 'Ananá', 'tomato': 'Tomate', 'pepper': 'Pimiento', 'onion': 'Cebolla',
+ 'cucumber': 'Pepino', 'eggplant': 'Berenjena', 'sweet-corn': 'Choclo', 'blackberry': 'Mora',
+ 'watermelon': 'Sandía', 'grape': 'Uva', 'fig': 'Higo', 'papaya': 'Papaya', 'apricot': 'Damasco',
+ 'basil': 'Albahaca', 'garlic': 'Ajo', 'arugula': 'Rúcula', 'peas': 'Arveja',
+}
+
 # National source headings; spelling variants and repeated fruit entries merge by ID.
 # zapallo/calabaza -> winter-squash; achicoria/radicheta/radicha -> chicory.
 BUY_ROWS = {
@@ -204,41 +265,56 @@ INTA_ROWS: list[tuple[str, Literal['seedStart', 'directSow', 'transplant', 'sow'
  ('celery', 'transplant', [5], 'Apio: transplante Mayo; variedades de otoño Verde de Cortar y De Verdeo, página 1.', 'Celery: transplant May for the autumn cultivars Verde de Cortar and De Verdeo, page 1.'),
 ]
 
+INTA_QUALIFIERS_ES = {
+ ('sweet-potato', 'transplant'): ' La propagación con material de vivero no se clasifica como inicio en almácigo.',
+ ('green-bean', 'directSow'): ' El período cruza el fin de año.',
+ ('summer-squash', 'directSow'): ' El período cruza el fin de año.',
+ ('garlic', 'directSow'): ' Es plantación directa de dientes, no inicio de semillas en almácigo.',
+ ('peas', 'directSow'): ' La fuente de la Ciudad también respalda una siembra de otoño sin método especificado.',
+ ('onion', 'seedStart'): ' No hay una fila de trasplante con fecha.',
+ ('chicory', 'directSow'): ' Corresponde a la tabla de otoño-invierno.',
+}
+
 def build_catalog() -> Catalog:
-    crops: dict[str, Crop] = {key: {'id': key, 'name': name, 'emoji': emoji, 'category': category, 'buy': None, 'plant': None}
+    crops: dict[str, Crop] = {key: {'id': key, 'name': name, 'nameEs': SPANISH_NAMES[key], 'emoji': emoji, 'category': category, 'buy': None, 'plant': None}
              for key, (name, emoji, category) in LABELS.items()}
     for season, row in BUY_ROWS.items():
         for key in row.split():
             crop = crops[key]
             if crop['buy'] is None:
-                crop['buy'] = {'months': [], 'sources': ['national-buy'], 'note': ''}
+                crop['buy'] = {'months': [], 'sources': ['national-buy'], 'note': '', 'noteEs': ''}
             crop['buy']['months'].extend(SEASONS[season])
     for crop in crops.values():
         if crop['buy'] is not None:
             crop['buy']['months'] = list(dict.fromkeys(crop['buy']['months']))
             crop['buy']['note'] = 'Coarse national seasonality, not an exhaustive Buenos Aires shop-availability calendar or evidence of local cultivation.'
+            crop['buy']['noteEs'] = 'Estacionalidad nacional aproximada, no un calendario exhaustivo de disponibilidad comercial en Buenos Aires ni evidencia de cultivo local.'
 
     for key in ('winter-squash', 'fennel', 'apple', 'pear'):
         crops[key]['buy'] = {
             'months': [3, 4, 5], 'sources': ['central-autumn'],
             'note': 'Mercado Central explicitly names this crop as an autumn arrival. March-May are coarse editorial bins. Preferred over the broader national list; other months remain outside this recommendation, not proof of retail absence.',
+            'noteEs': 'El Mercado Central menciona explícitamente este cultivo como producto de otoño. Marzo-mayo son períodos editoriales aproximados. Se prioriza sobre la lista nacional más amplia; que otros meses no estén incluidos no demuestra que no se venda.',
         }
 
-    def plant(key: str, action: Literal['seedStart', 'directSow', 'transplant', 'sow'], months: list[int], source: str, note: str):
+    def plant(key: str, action: Literal['seedStart', 'directSow', 'transplant', 'sow'], months: list[int], source: str, note: str, note_es: str):
         windows = crops[key]['plant']
         if windows is None:
             windows = []
             crops[key]['plant'] = windows
-        windows.append({'action': action, 'months': months, 'sources': [source], 'note': note})
+        windows.append({'action': action, 'months': months, 'sources': [source], 'note': note, 'noteEs': note_es})
 
     for key in CITY_AUTUMN:
         if key not in ALL_YEAR:
-            plant(key, 'sow', [3, 4, 5], 'city-autumn', 'Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting.')
+            plant(key, 'sow', [3, 4, 5], 'city-autumn', 'Autumn sowing; March-May are coarse editorial bins. Source does not distinguish direct sowing from seed starting.', 'Siembra de otoño; marzo-mayo son períodos editoriales aproximados. La fuente no distingue entre siembra directa e inicio en almácigo.')
     for key in ALL_YEAR:
-        plant(key, 'sow', list(range(1, 13)), 'gba-all-year', 'Explicit all-year planting guidance; propagation method unspecified. Not an assertion that every cultivar suits every month.')
-    for key, action, months, _source_text, note in INTA_ROWS:
-        plant(key, action, months, 'inta-calendar', note + ' INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.')
-    result: Catalog = {'sources': SOURCES, 'crops': sorted(crops.values(), key=lambda crop: crop['name'])}
+        plant(key, 'sow', list(range(1, 13)), 'gba-all-year', 'Explicit all-year planting guidance; propagation method unspecified. Not an assertion that every cultivar suits every month.', 'Orientación explícita de siembra durante todo el año; método de propagación no especificado. No afirma que todos los cultivares sean adecuados para todos los meses.')
+    for key, action, months, source_text, note in INTA_ROWS:
+        note_es = source_text + INTA_QUALIFIERS_ES.get((key, action), '')
+        note_es += ' La cobertura geográfica del calendario del INTA no está indicada explícitamente; se usa como referencia regional general, no como garantía específica para Belgrano.'
+        plant(key, action, months, 'inta-calendar', note + ' INTA calendar coverage is not explicitly stated; use as a general regional reference, not a Belgrano-specific guarantee.', note_es)
+    localized_sources: dict[str, Source] = {key: {**source, **SOURCE_TRANSLATIONS[key]} for key, source in SOURCES.items()}  # type: ignore[misc]
+    result: Catalog = {'sources': localized_sources, 'crops': sorted(crops.values(), key=lambda crop: crop['name'])}
     validate_catalog(result)
     return result
 
@@ -252,7 +328,7 @@ def validate_catalog(catalog):
     require(isinstance(sources, dict) and bool(sources), 'source registry')
     for key, source in sources.items():
         require(isinstance(key, str) and re.fullmatch(r'[a-z][a-z0-9]*(?:-[a-z0-9]+)*', key), 'source ID')
-        require(isinstance(source, dict) and set(source) == {'title', 'url', 'region', 'precision', 'note'}, 'source shape')
+        require(isinstance(source, dict) and set(source) == {'title', 'titleEs', 'url', 'region', 'regionEs', 'precision', 'precisionEs', 'note', 'noteEs'}, 'source shape')
         require(all(isinstance(value, str) and value.strip() for value in source.values()), 'source metadata')
         try:
             parsed_url = urlsplit(source['url'])
@@ -265,12 +341,12 @@ def validate_catalog(catalog):
     require(isinstance(catalog['crops'], list) and bool(catalog['crops']), 'crop list')
     ids = set()
     for crop in catalog['crops']:
-        require(isinstance(crop, dict) and set(crop) == {'id', 'name', 'emoji', 'category', 'buy', 'plant'}, 'crop shape')
+        require(isinstance(crop, dict) and set(crop) == {'id', 'name', 'nameEs', 'emoji', 'category', 'buy', 'plant'}, 'crop shape')
         key = crop['id']
         require(isinstance(key, str) and re.fullmatch(r'[a-z][a-z0-9]*(?:-[a-z0-9]+)*', key), 'crop ID')
         require(key not in ids, 'duplicate crop ID')
         ids.add(key)
-        require(all(isinstance(crop[field], str) and crop[field].strip() for field in ('name', 'emoji')), 'crop labels')
+        require(all(isinstance(crop[field], str) and crop[field].strip() for field in ('name', 'nameEs', 'emoji')), 'crop labels')
         require(crop['category'] in ('vegetable', 'fruit', 'herb'), 'crop category')
         require(crop['buy'] is None or isinstance(crop['buy'], dict), 'buy shape')
         require(crop['plant'] is None or (isinstance(crop['plant'], list) and bool(crop['plant'])), 'plant shape')
@@ -278,7 +354,7 @@ def validate_catalog(catalog):
         if crop['plant'] is not None:
             windows += [(window, True) for window in crop['plant']]
         for window, planting in windows:
-            fields = {'months', 'sources', 'note'} | ({'action'} if planting else set())
+            fields = {'months', 'sources', 'note', 'noteEs'} | ({'action'} if planting else set())
             require(isinstance(window, dict) and set(window) == fields, 'window shape')
             months = window['months']
             require(isinstance(months, list) and bool(months), 'empty months are not unknown')
@@ -289,6 +365,7 @@ def validate_catalog(catalog):
             require(all(isinstance(ref, str) and ref in sources for ref in refs), 'unknown source reference')
             require(len(refs) == len(set(refs)), 'duplicate source reference')
             require(isinstance(window['note'], str) and bool(window['note'].strip()), 'window evidence note')
+            require(isinstance(window['noteEs'], str) and bool(window['noteEs'].strip()), 'Spanish window evidence note')
             if planting:
                 require(window['action'] in ('seedStart', 'directSow', 'transplant', 'sow'), 'plant action')
 

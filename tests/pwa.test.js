@@ -28,3 +28,16 @@ test('month navigation is one compact stepper with a separate current-month shor
   assert.match(html, /<div class="month-stepper"[^>]*>[\s\S]*id="previous"[\s\S]*id="month-name"[\s\S]*id="next"[\s\S]*<\/div>[\s\S]*id="current"/);
   assert.doesNotMatch(html, /id="month-note"/);
 });
+
+test('footer settings include a bilingual language toggle after theme', () => {
+  assert.match(html, /id="theme"[\s\S]*id="language-label"[\s\S]*id="language"/);
+  assert.match(html, /data-lang="en"[^>]*lang="en"[^>]*>English</);
+  assert.match(html, /data-lang="es"[^>]*lang="es"[^>]*>Español</);
+});
+
+test('service worker registration failure reveals the translated app status', () => {
+  assert.match(html, /<p id="offline-error" role="status" hidden><\/p>/);
+  assert.match(html, /var p=document\.getElementById\('offline-error'\);if\(p\)p\.hidden=false/);
+  assert.doesNotMatch(html, /document\.getElementById\('offline-error'\)\.hidden=false/);
+  assert.doesNotMatch(html, /p\.textContent='Offline support could not be enabled/);
+});

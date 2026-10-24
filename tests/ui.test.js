@@ -5,12 +5,12 @@ const vm = require('node:vm');
 const path = require('node:path');
 
 const code = fs.readFileSync(path.join(__dirname, '../app-v2.js'), 'utf8');
-const fixture = { sources: [{ id: 'fixture', title: 'Test source', url: 'https://example.com', region: 'Test region', precision: 'Monthly', note: 'Fixture only' }], crops: [
-  { id: 'a', name: 'Alpha', emoji: '🥬', category: 'vegetable', buy: { months: [3], sources: ['fixture'], note: 'Fixture buying note' }, plant: [{ action: 'sow', months: [3], sources: ['fixture'], note: 'Fixture planting note' }] },
-  { id: 'b', name: 'Beta', emoji: '🌱', category: 'herb', buy: null, plant: null },
+const fixture = { sources: [{ id: 'fixture', title: 'Test source', titleEs: 'Fuente de prueba', url: 'https://example.com', region: 'Test region', regionEs: 'Región de prueba', precision: 'Monthly', precisionEs: 'Mensual', note: 'Fixture only', noteEs: 'Solo para pruebas' }], crops: [
+  { id: 'a', name: 'Alpha', nameEs: 'Alfa', emoji: '🥬', category: 'vegetable', buy: { months: [3], sources: ['fixture'], note: 'Fixture buying note', noteEs: 'Nota de compra de prueba' }, plant: [{ action: 'sow', months: [3], sources: ['fixture'], note: 'Fixture planting note', noteEs: 'Nota de siembra de prueba' }] },
+  { id: 'b', name: 'Beta', nameEs: 'Beta', emoji: '🌱', category: 'herb', buy: null, plant: null },
 ] };
 
-function boot({ stored = {}, unavailable = false, date = '2026-04-01T01:00:00Z', catalog = fixture, navigationType = 'navigate', historyState = null, returnCard = null } = {}) {
+function boot({ stored = {}, unavailable = false, locale = 'en-US', date = '2026-04-01T01:00:00Z', catalog = fixture, navigationType = 'navigate', historyState = null, returnCard = null } = {}) {
   const elements = new Map();
   function element(id) {
     if (!elements.has(id)) elements.set(id, { textContent: '', innerHTML: '', hidden: false, dataset: {}, value: '', listeners: {}, attributes: {}, setAttribute(k, v) { this.attributes[k] = String(v); }, addEventListener(k, fn) { this.listeners[k] = fn; }, focus() {}, showModal() { this.open = true; }, close() { this.open = false; } });
@@ -21,7 +21,7 @@ function boot({ stored = {}, unavailable = false, date = '2026-04-01T01:00:00Z',
   const windowListeners = {};
   class Clock extends Date { constructor(...args) { super(...(args.length ? args : [date])); } }
   const history = { state: historyState, replaceState(value) { this.state = value; } };
-  const context = { window: { CROPS: catalog?.crops, SOURCES: catalog ? Object.fromEntries(catalog.sources.map(source => [source.id, source])) : undefined, addEventListener() {} }, document: { documentElement: { dataset: {} }, getElementById: element, querySelectorAll: () => [], querySelector: () => returnCard, addEventListener() {} }, localStorage: { getItem(k) { if (unavailable) throw Error('blocked'); return storage.get(k) ?? null; }, setItem(k, v) { if (unavailable) throw Error('blocked'); storage.set(k, v); } }, history, performance: { getEntriesByType: name => name === 'navigation' ? [{ type: navigationType }] : [] }, Date: Clock, Intl, console, setTimeout, URL };
+  const context = { window: { CROPS: catalog?.crops, SOURCES: catalog ? Object.fromEntries(catalog.sources.map(source => [source.id, source])) : undefined, addEventListener() {} }, document: { documentElement: { dataset: {} }, getElementById: element, querySelectorAll: () => [], querySelector: () => returnCard, addEventListener() {} }, navigator: { language: locale }, localStorage: { getItem(k) { if (unavailable) throw Error('blocked'); return storage.get(k) ?? null; }, setItem(k, v) { if (unavailable) throw Error('blocked'); storage.set(k, v); } }, history, performance: { getEntriesByType: name => name === 'navigation' ? [{ type: navigationType }] : [] }, Date: Clock, Intl, console, setTimeout, URL };
   context.document.addEventListener = (name, listener) => { documentListeners[name] = listener; };
   context.window.addEventListener = (name, listener) => { windowListeners[name] = listener; };
   context.document.listeners = documentListeners;
@@ -120,6 +120,41 @@ test('theme choices persist and system removes explicit override', () => {
   assert.equal(ui.storage.get('theme'), 'light');
   ui.click('theme', { theme: 'system' });
   assert.equal(ui.context.document.documentElement.dataset.theme, undefined);
+});
+
+test('language defaults from the browser and a choice translates and persists', () => {
+  const ui = boot({ locale: 'es-AR' });
+  assert.equal(ui.context.document.documentElement.lang, 'es');
+  assert.equal(ui.context.document.title, 'Temporada — Plantar y comprar en Buenos Aires');
+  assert.equal(ui.element('plant').textContent, 'Plantar');
+  assert.equal(ui.element('month-name').textContent, 'Marzo');
+  assert.equal(ui.element('offline-error').textContent, 'No se pudo habilitar el uso sin conexión. Podés seguir usando esta página en línea.');
+  assert.match(ui.element('cards').innerHTML, /Alfa/);
+  assert.match(ui.element('cards').innerHTML, /Nota de siembra de prueba/);
+  assert.match(ui.element('cards').innerHTML, /Fuente de prueba/);
+  ui.click('language', { lang: 'en' });
+  assert.equal(ui.context.document.documentElement.lang, 'en');
+  assert.equal(ui.storage.get('language'), 'en');
+  assert.equal(ui.element('plant').textContent, 'Plant');
+  assert.match(ui.element('cards').innerHTML, /Alpha/);
+});
+
+test('search matches crop names in either language', () => {
+  const ui = boot();
+  ui.element('q').listeners.input({ target: { value: 'alfa' } });
+  assert.match(ui.element('cards').innerHTML, /Alpha/);
+});
+
+test('restores a saved language on a new visit', () => {
+  const ui = boot({ stored: { language: 'es' }, locale: 'en-US' });
+  assert.equal(ui.context.document.documentElement.lang, 'es');
+  assert.equal(ui.element('buy').textContent, 'Comprar');
+});
+
+test('invalid saved language visibly falls back to the browser language', () => {
+  const ui = boot({ stored: { language: 'unexpected' }, locale: 'es-AR' });
+  assert.equal(ui.context.document.documentElement.lang, 'es');
+  assert.match(ui.element('preference-status').textContent, /idioma guardado no era válido/);
 });
 
 test('resuming preserves browsed month, search and card DOM', () => {

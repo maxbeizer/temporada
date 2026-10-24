@@ -43,7 +43,7 @@ class CatalogTests(unittest.TestCase):
 
     def test_multiple_windows_preserve_gap(self):
         crop = self.crops['basil']
-        crop['plant'].append(dict(action='seedStart', months=[2, 3], sources=['inta-calendar'], note='Synthetic validator fixture, not production evidence.'))
+        crop['plant'].append(dict(action='seedStart', months=[2, 3], sources=['inta-calendar'], note='Synthetic validator fixture, not production evidence.', noteEs='Ejemplo sintético para validar.'))
         build_data.validate_catalog(self.catalog)
         windows = [w['months'] for w in crop['plant'] if w['action'] == 'seedStart']
         self.assertEqual(windows, [[8, 9], [2, 3]])
@@ -118,7 +118,7 @@ class CatalogTests(unittest.TestCase):
 
     def test_browser_facing_evidence_is_english(self):
         text = ' '.join(
-            [value for source in self.catalog['sources'].values() for key, value in source.items() if key != 'url']
+            [source[key] for source in self.catalog['sources'].values() for key in ('title', 'region', 'precision', 'note')]
             + [window['note'] for crop in self.catalog['crops'] for window in (([crop['buy']] if crop['buy'] else []) + (crop['plant'] or []))]
         )
         self.assertIsNone(re.search(
@@ -126,6 +126,33 @@ class CatalogTests(unittest.TestCase):
             text,
             re.IGNORECASE,
         ))
+
+    def test_every_crop_has_a_spanish_display_name(self):
+        self.assertTrue(all(crop['nameEs'].strip() for crop in self.catalog['crops']))
+        self.assertEqual(self.crops['tomato']['nameEs'], 'Tomate')
+
+    def test_evidence_has_spanish_translations(self):
+        self.assertTrue(all(
+            all(source[field].strip() for field in ('titleEs', 'regionEs', 'precisionEs', 'noteEs'))
+            for source in self.catalog['sources'].values()
+        ))
+        windows = [window for crop in self.catalog['crops'] for window in (([crop['buy']] if crop['buy'] else []) + (crop['plant'] or []))]
+        self.assertTrue(all(window['noteEs'].strip() for window in windows))
+
+    def test_spanish_inta_notes_preserve_english_qualifiers(self):
+        cases = {
+            ('sweet-potato', 'transplant'): 'material de vivero',
+            ('garlic', 'directSow'): 'dientes',
+            ('peas', 'directSow'): 'fuente de la Ciudad',
+            ('onion', 'seedStart'): 'trasplante con fecha',
+            ('chicory', 'directSow'): 'otoño-invierno',
+            ('green-bean', 'directSow'): 'cruza el fin de año',
+            ('summer-squash', 'directSow'): 'cruza el fin de año',
+        }
+        for (crop_id, action), phrase in cases.items():
+            with self.subTest(crop_id=crop_id, action=action):
+                window = next(item for item in self.crops[crop_id]['plant'] if item['action'] == action)
+                self.assertIn(phrase, window['noteEs'])
 
 
 if __name__ == '__main__':
